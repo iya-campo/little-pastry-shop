@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IRecipes } from '@/types/PastryShop';
 import { Avatar, List } from 'antd';
 
@@ -8,31 +8,33 @@ interface RecipeListProps {
 }
 
 function RecipeList(props: RecipeListProps) {
-  const { Recipes, isMobile }: { Recipes?: IRecipes[]; isMobile?: boolean } = useContext(BakeryContext);
+  const { Recipes, isMobile, tabHeight }: { Recipes?: IRecipes[]; isMobile?: boolean; tabHeight?: number } = useContext(PastryShopContext);
   const { setPastryInfo } = props;
 
   return (
-    <List
-      style={{ height: `${isMobile ? '200px' : '412px'}`, overflow: 'auto' }}
-      size='small'
-      itemLayout='horizontal'
-      dataSource={Recipes}
-      renderItem={(recipe: IRecipes, index: number) => (
-        <List.Item
-          key={index}
-          onClick={() => {
-            setPastryInfo(recipe);
-          }}
-          style={{ cursor: 'pointer' }}
-        >
-          <List.Item.Meta
-            avatar={<Avatar src={`icons/${recipe.name}.png`} style={{ borderRadius: 0 }} />}
-            title={recipe.name}
-            description='Ant Design, a design language for background applications.'
-          />
-        </List.Item>
-      )}
-    />
+    <section style={{ display: 'flex', flexDirection: 'column', height: isMobile ? '300px' : tabHeight }}>
+      <List
+        size='small'
+        itemLayout='horizontal'
+        dataSource={Recipes}
+        style={{ overflowY: 'auto' }}
+        renderItem={(recipe: IRecipes, index: number) => (
+          <List.Item
+            key={index}
+            onClick={() => {
+              setPastryInfo(recipe);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            <List.Item.Meta
+              avatar={<Avatar src={`icons/${recipe.name}.png`} style={{ borderRadius: 0 }} />}
+              title={recipe.name}
+              description='Ant Design, a design language for background applications.'
+            />
+          </List.Item>
+        )}
+      />
+    </section>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IPastriesOnDisplay, IStorage } from '@/types/PastryShop';
 import { Card, Select, SelectProps, Typography } from 'antd';
 import { CloseSquareOutlined } from '@ant-design/icons';
@@ -12,7 +12,7 @@ interface DisplayStandProps {
 }
 
 function DisplayStand(props: DisplayStandProps) {
-  const { Storage, isMobile }: { Storage?: IStorage; isMobile?: boolean } = useContext(BakeryContext);
+  const { Storage, isMobile }: { Storage?: IStorage; isMobile?: boolean } = useContext(PastryShopContext);
   const { pastry, index } = props;
 
   const pastriesOnDisplay: SelectProps['options'] = [];
@@ -25,7 +25,7 @@ function DisplayStand(props: DisplayStandProps) {
   });
 
   return (
-    <Card key={index} className={styles.displayStand} style={{ width: `${isMobile ? '100%' : '180px'}` }}>
+    <Card key={index} className={styles.displayStand} style={{ width: isMobile ? '100%' : '180px' }}>
       {pastry ? (
         <>
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>

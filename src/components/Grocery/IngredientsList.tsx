@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IItems, IItemsIngredients, IItem } from '@/types/PastryShop';
 import { Button, List, Typography } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
@@ -9,17 +9,18 @@ interface IIngredientsListProps {
 }
 
 function IngredientsList(props: IIngredientsListProps) {
-  const { Items, isMobile }: { Items?: IItems; isMobile?: boolean } = useContext(BakeryContext);
+  const { Items, isMobile, tabHeight }: { Items?: IItems; isMobile?: boolean; tabHeight?: number } = useContext(PastryShopContext);
 
   const { addToCart } = props;
   const ingredientsList: IItemsIngredients[] = Items.ingredients;
 
   return (
-    <section style={{ paddingRight: `${isMobile ? 0 : '2rem'}`, height: '100%' }}>
+    <section style={{ display: 'flex', flexDirection: 'column', height: isMobile ? '300px' : tabHeight }}>
+      <Typography.Title level={4}>Ingredients</Typography.Title>
       <List
         size='small'
-        header={<Typography.Title level={4}>Ingredients</Typography.Title>}
         dataSource={ingredientsList}
+        style={{ overflowY: 'auto' }}
         renderItem={(item: IItemsIngredients) => (
           <List.Item
             onClick={() => {
@@ -32,7 +33,6 @@ function IngredientsList(props: IIngredientsListProps) {
             </Button>
           </List.Item>
         )}
-        style={{ height: `${isMobile ? '250px' : '412px'}`, overflow: 'auto' }}
       />
     </section>
   );

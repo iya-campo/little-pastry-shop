@@ -1,5 +1,5 @@
-import React, { useContext, ReactElement } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import React, { useContext, ReactElement, useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IPlayer, IRecipes, IItems, IStorage, IItem } from '@/types/PastryShop';
 import IngredientsList from './IngredientsList';
 import EquipmentList from './EquipmentList';
@@ -14,12 +14,17 @@ interface ITabDetails {
 
 function Grocery() {
   const {
-    Player,
-    Recipes,
-    Items,
-    Storage,
     isMobile,
-  }: { Player?: IPlayer; Recipes?: IRecipes[]; Items?: IItems; Storage?: IStorage; isMobile?: boolean } = useContext(BakeryContext);
+    setTabHeight,
+  }: {
+    isMobile?: boolean;
+    setTabHeight?: Dispatch<SetStateAction<number>>;
+  } = useContext(PastryShopContext);
+  const heightRef = useRef(null);
+
+  useEffect(() => {
+    setTabHeight(heightRef.current?.clientHeight);
+  }, []);
 
   const addToCart = (item: IItem): void => {
     console.log(`Added ${item.name}(s) to cart!`);
@@ -43,10 +48,10 @@ function Grocery() {
   return (
     <Layout.Content style={{ display: 'flex', flexDirection: 'column' }}>
       <Typography.Title level={2}>Grocery</Typography.Title>
-      <Row style={{ flexGrow: 1 }}>
-        <Col span={isMobile ? 24 : 16}>
+      <Row style={{ flexGrow: 1, overflow: 'hidden' }} ref={heightRef}>
+        <Col span={isMobile ? 24 : 16} style={{ marginTop: isMobile ? '1rem' : 0 }}>
           <Tabs
-            style={{ height: '100%' }}
+            style={{ height: '100%', paddingRight: isMobile ? 0 : '2rem' }}
             className={styles.listTabs}
             tabPosition='left'
             items={new Array(2).fill(null).map((_, index: number) => {
@@ -59,7 +64,7 @@ function Grocery() {
             })}
           />
         </Col>
-        <Col span={isMobile ? 24 : 8}>
+        <Col span={isMobile ? 24 : 8} style={{ marginTop: isMobile ? '1rem' : 0 }}>
           <ShoppingCart />
         </Col>
       </Row>

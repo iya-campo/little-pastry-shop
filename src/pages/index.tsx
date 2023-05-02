@@ -16,6 +16,7 @@ import pastryShopTheme from '@/themes/PastryShopTheme';
 
 export default function Index() {
   const [isMobile, setIsMobile] = useState(false);
+  const [tabHeight, setTabHeight] = useState(0);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -71,14 +72,14 @@ export default function Index() {
             </Typography.Title>
           </Layout.Header>
           <Layout.Content className={styles.content}>
-            <PastryShopContext.Provider value={{ Player, Storage, Recipes, Items, isMobile }}>
+            <PastryShopContext.Provider value={{ Player, Storage, Recipes, Items, isMobile, tabHeight, setTabHeight }}>
               <Tabs
                 defaultActiveKey='1'
                 items={tabs}
                 centered
                 onChange={onChange}
                 size='large'
-                style={{ maxWidth: '1200px', height: `${isMobile ? 'auto' : '575px'}`, flexGrow: 1 }}
+                style={{ maxWidth: '1200px', height: isMobile ? 'auto' : '575px', flexGrow: 1 }}
                 className={styles.tabs}
               />
             </PastryShopContext.Provider>

@@ -1,29 +1,33 @@
-import React, { useState, useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import React, { useState, useContext, Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IRecipes } from '@/types/PastryShop';
 import RecipeList from './RecipeList';
 import RecipeInfo from './RecipeInfo';
 import Kitchen from './Kitchen';
-import { Button, Col, Layout, Row, Typography } from 'antd';
+import BakeButton from './BakeButton';
+import { Layout, Row, Col, Typography } from 'antd';
 import styles from '@/styles/components/CookBook.module.scss';
 
 function CookBook() {
-  const { isMobile }: { isMobile?: boolean } = useContext(BakeryContext);
+  const { isMobile, setTabHeight }: { isMobile?: boolean; setTabHeight?: Dispatch<SetStateAction<number>> } = useContext(PastryShopContext);
   const [pastryInfo, setPastryInfo] = useState<IRecipes>();
+  const heightRef = useRef(null);
+
+  useEffect(() => {
+    setTabHeight(heightRef.current?.clientHeight);
+  }, []);
 
   return (
     <Layout.Content style={{ display: 'flex', flexDirection: 'column' }}>
       <Typography.Title level={2}>Cook Book</Typography.Title>
-      <Row gutter={[16, 16]} style={{ display: 'flex', flexGrow: 1 }}>
-        <Col span={isMobile ? 24 : 10}>
+      <Row style={{ display: 'flex', flexGrow: 1 }} ref={heightRef}>
+        <Col span={isMobile ? 24 : 10} style={{ padding: isMobile ? '1rem 0 1rem 0' : '0 2rem 0 0' }}>
           <RecipeList setPastryInfo={setPastryInfo} />
         </Col>
         <Col span={isMobile ? 24 : 14}>
           <RecipeInfo pastryInfo={pastryInfo} />
           <Kitchen />
-          <Row style={{ height: `${isMobile ? 'auto' : '10%'}` }}>
-            <Button style={{ height: '100%', width: '100%' }}>Bake!</Button>
-          </Row>
+          <BakeButton />
         </Col>
       </Row>
     </Layout.Content>

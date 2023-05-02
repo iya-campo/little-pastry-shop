@@ -1,16 +1,23 @@
-import React, { useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { Button, InputNumber, List, Typography } from 'antd';
 import styles from '@/styles/components/ShoppingCart.module.scss';
 
 function ShoppingCart() {
-  const { isMobile }: { isMobile?: boolean } = useContext(BakeryContext);
+  const {
+    isMobile,
+    tabHeight,
+  }: {
+    isMobile?: boolean;
+    tabHeight?: number;
+  } = useContext(PastryShopContext);
 
   return (
-    <section style={{ display: 'flex', flexDirection: 'column', height: '100%', marginTop: `${isMobile ? '2rem' : 0}` }}>
+    <section style={{ display: 'flex', flexDirection: 'column', height: isMobile ? '300px' : tabHeight }}>
+      <Typography.Title level={4}>Shopping Cart</Typography.Title>
       <List
         size='small'
-        header={<Typography.Title level={4}>Shopping Cart</Typography.Title>}
+        style={{ marginBottom: '1rem', overflowY: 'auto' }}
         dataSource={[
           'Apple',
           'Apple',
@@ -43,8 +50,6 @@ function ShoppingCart() {
             <InputNumber min={1} max={10} defaultValue={3} onChange={() => {}} style={{ width: '60px' }} />
           </List.Item>
         )}
-        style={{ height: `${isMobile ? '250px' : '365px'}`, marginBottom: '1rem', overflow: 'auto' }}
-        className={styles.shoppingCartList}
       />
       <Button style={{ width: '100%' }}>Purchase</Button>
     </section>

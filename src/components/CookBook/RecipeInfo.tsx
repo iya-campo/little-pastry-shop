@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IIngredients, IRecipes } from '@/types/PastryShop';
 import { Row, Col, Typography } from 'antd';
 import Image from 'next/image';
@@ -9,13 +9,13 @@ interface RecipeInfoProps {
 }
 
 function RecipeInfo(props: RecipeInfoProps) {
-  const { isMobile }: { isMobile?: boolean } = useContext(BakeryContext);
+  const { isMobile }: { isMobile?: boolean } = useContext(PastryShopContext);
   const { pastryInfo } = props;
 
   return (
     <>
       {pastryInfo && pastryInfo.name ? (
-        <Row style={{ height: `${isMobile ? 'auto' : '30%'}` }}>
+        <Row style={{ height: isMobile ? 'auto' : '30%' }}>
           <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Image alt='pastry img' src={`/icons/${pastryInfo.name}.png`} width={64} height={64}></Image>
           </Col>
@@ -40,7 +40,7 @@ function RecipeInfo(props: RecipeInfoProps) {
           </Col>
         </Row>
       ) : (
-        <div style={{ height: `${isMobile ? 'auto' : '30%'}`, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ height: isMobile ? 'auto' : '30%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Typography.Text>No pastry selected.</Typography.Text>
         </div>
       )}

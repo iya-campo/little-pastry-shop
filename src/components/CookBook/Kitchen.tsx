@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IIngredients, IPlayer, IStorage } from '@/types/PastryShop';
 import { Row, Col, Select, SelectProps, Typography } from 'antd';
 import styles from '@/styles/components/Kitchen.module.scss';
 
 function Kitchen() {
-  const { Player, Storage, isMobile }: { Player?: IPlayer; Storage?: IStorage; isMobile?: boolean } = useContext(BakeryContext);
+  const { Player, Storage, isMobile }: { Player?: IPlayer; Storage?: IStorage; isMobile?: boolean } = useContext(PastryShopContext);
   const ingredients: SelectProps['options'] = [];
   const equipment: SelectProps['options'] = [];
 
@@ -28,7 +28,7 @@ function Kitchen() {
   };
 
   return (
-    <Row gutter={[16, 16]} style={{ height: `${isMobile ? 'auto' : '60%'}`, padding: '1rem 0' }}>
+    <Row gutter={[16, 16]} style={{ height: isMobile ? 'auto' : '60%', padding: '1rem 0' }}>
       <Col span={8} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography.Title level={5}>Equipment</Typography.Title>
         <section style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, width: '100%' }}>

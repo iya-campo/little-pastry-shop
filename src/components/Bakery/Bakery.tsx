@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IStorage, IPastriesOnDisplay, IPlayer } from '@/types/PastryShop';
 import DisplayStand from './DisplayStand';
 import { Layout, Typography } from 'antd';
 import styles from '../../styles/components/Bakery.module.scss';
 
 function Bakery() {
-  const { Player, Storage }: { Player?: IPlayer; Storage?: IStorage } = useContext(BakeryContext);
+  const { Player, Storage }: { Player?: IPlayer; Storage?: IStorage } = useContext(PastryShopContext);
 
   return (
     <Layout.Content style={{ display: 'flex', flexDirection: 'column' }}>

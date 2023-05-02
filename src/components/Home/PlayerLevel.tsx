@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import BakeryContext from '@/contexts/PastryShopContext';
+import PastryShopContext from '@/contexts/PastryShopContext';
 import { IItems, IItemsEquipment, IPlayer, IRecipes } from '@/types/PastryShop';
 import { Card, Divider, Typography } from 'antd';
 import { DoubleRightOutlined } from '@ant-design/icons';
 
 function PlayerLevel() {
   const { Player, Recipes, Items, isMobile }: { Player?: IPlayer; Recipes?: IRecipes[]; Items?: IItems; isMobile?: boolean } =
-    useContext(BakeryContext);
+    useContext(PastryShopContext);
   const [levelUpRewards, setLevelUpRewards] = useState<string[]>([]);
   const { equipment }: { equipment: IItemsEquipment[] } = Items;
 
