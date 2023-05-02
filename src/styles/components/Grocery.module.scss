@@ -1,0 +1,11 @@
+.listTabs {
+  :global {
+    .ant-tabs-nav-list {
+      padding: 0 8px;
+    }
+
+    .ant-list-header {
+      padding-top: 0;
+    }
+  }
+}

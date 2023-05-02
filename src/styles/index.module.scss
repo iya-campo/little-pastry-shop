@@ -1,0 +1,39 @@
+@import '@/shared/styles/colors.module.scss';
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary;
+  height: 80px;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+  margin: 1rem;
+}
+
+.tabs {
+  :global {
+    .ant-tabs-content,
+    .ant-tabs-tabpane {
+      height: 100%;
+    }
+
+    .ant-tabs-ink-bar {
+      background: $secondary;
+    }
+
+    .ant-tabs-tab.ant-tabs-tab-active > .ant-tabs-tab-btn {
+      color: $secondary;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .content {
+    padding-top: 0;
+  }
+}
