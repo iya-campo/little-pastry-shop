@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
 import BakeryContext from '@/contexts/PastryShopContext';
 import { IRecipes } from '@/types/PastryShop';
 import { Avatar, List } from 'antd';
 
 interface RecipeListProps {
-  setPastryInfo: React.Dispatch<React.SetStateAction<IRecipes>>;
+  setPastryInfo: Dispatch<SetStateAction<IRecipes>>;
 }
 
 function RecipeList(props: RecipeListProps) {
