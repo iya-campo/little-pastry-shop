@@ -4,7 +4,7 @@ import { IRecipes } from '@/types/PastryShop';
 import { Avatar, List } from 'antd';
 
 interface RecipeListProps {
-  // setPastryInfo: <IRecipes>() => {}
+  setPastryInfo: React.Dispatch<React.SetStateAction<IRecipes>>;
 }
 
 function RecipeList(props: RecipeListProps) {
