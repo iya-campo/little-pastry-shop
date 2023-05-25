@@ -27,7 +27,7 @@ function RecipeList(props: RecipeListProps) {
             style={{ cursor: 'pointer' }}
           >
             <List.Item.Meta
-              avatar={<Avatar src={`icons/${recipe.name}.png`} style={{ borderRadius: 0 }} />}
+              avatar={<Avatar src={`icons/${recipe.image}`} style={{ borderRadius: 0 }} />}
               title={recipe.name}
               description='Ant Design, a design language for background applications.'
             />

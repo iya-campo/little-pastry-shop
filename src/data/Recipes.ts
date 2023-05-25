@@ -28,7 +28,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl']
+        equipment: ['mixing bowl'],
+        image: 'biscuits.png'
     },
     {
         id: 1,
@@ -57,7 +58,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl']
+        equipment: ['mixing bowl'],
+        image: 'cookies.png'
     },
     {
         id: 2,
@@ -86,7 +88,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl']
+        equipment: ['mixing bowl'],
+        image: 'doughnut.png'
     },
     {
         id: 3,
@@ -115,7 +118,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'cooling rank']
+        equipment: ['mixing bowl', 'cooling rank'],
+        image: 'muffins.png'
     },
     {
         id: 4,
@@ -144,7 +148,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'cooling rank']
+        equipment: ['mixing bowl', 'cooling rank'],
+        image: 'croissant.png'
     },
     {
         id: 5,
@@ -173,7 +178,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['cooling rack', 'spatula']
+        equipment: ['cooling rack', 'spatula'],
+        image: 'eclair.png'
     },
     {
         id: 6,
@@ -202,7 +208,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'spatula']
+        equipment: ['mixing bowl', 'spatula'],
+        image: 'cheesecake.png'
     },
     {
         id: 7,
@@ -231,7 +238,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'spatula', 'cooling rack']
+        equipment: ['mixing bowl', 'spatula', 'cooling rack'],
+        image: 'chocolate-cake.png'
     },
     {
         id: 8,
@@ -260,7 +268,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'spatula', 'rolling pin']
+        equipment: ['mixing bowl', 'spatula', 'rolling pin'],
+        image: 'apple-pie.png'
     },
     {
         id: 9,
@@ -285,7 +294,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'speed mixer']
+        equipment: ['mixing bowl', 'speed mixer'],
+        image: 'baguette.png'
     },
     {
         id: 10,
@@ -314,7 +324,8 @@ const Recipes: IRecipes[] = [
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'speed mixer', 'measuring spoons']
+        equipment: ['mixing bowl', 'speed mixer', 'measuring spoons'],
+        image: 'macaroons.png'
     },
 ]
 

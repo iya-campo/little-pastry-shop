@@ -36,7 +36,8 @@ export interface IRecipes {
     levelRequirement: number,
     price: number,
     ingredients: IIngredients[],
-    equipment: string[]
+    equipment: string[],
+    image: string
 }
 
 export interface IStorage {
