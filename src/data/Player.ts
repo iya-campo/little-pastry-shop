@@ -5,29 +5,29 @@ const EXP_INC = 500;
 export const Player: IPlayer = {
     id: '000',
     name: 'Bread Connoisseur',
-    level: 1,
+    level: 5,
     get currentExp() {
         return (this.level * EXP_INC) - EXP_INC
     },
     get expToLevel() {
         return this.level * EXP_INC
     },
-    cash: 2000,
-    rep: 1,
+    cash: 1000,
+    rep: 100,
     daysPlayed: 3,
     unlockedRecipes: [
         {
             name: 'Biscuits',
-            mastery: 0,
-            amountBaked: 2
+            mastery: 10,
+            amountBaked: 50
         },
         {
             name: 'Doughnut',
             mastery: 10,
-            amountBaked: 0
+            amountBaked: 50
         }
     ],
-    unlockedEquipment: [],
+    unlockedEquipment: ['Mixing Bowl'],
 }
 
 export default Player;

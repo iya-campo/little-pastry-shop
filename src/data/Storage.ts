@@ -13,12 +13,7 @@ const Storage: IStorage = {
             qty: 50,
             price: 25,
             quality: 'Excellent',
-        },{
-            name: 'Doughnut',
-            qty: 1,
-            price: 50,
-            quality: 'Poor',
-        }
+        },
     ],
     ingredients: [
         {
@@ -61,10 +56,10 @@ const Storage: IStorage = {
             order: 0
         },
         {
-            name: 'Doughnut',
+            name: 'Empty',
             qty: 1,
-            price: 50,
-            quality: 'Poor',
+            price: 0,
+            quality: 'N/A',
             order: 1
         },
         {
