@@ -14,11 +14,11 @@
 }
 
 .tabRow > .tabCol:first-child {
-  background-position: 80% 0;
+  background-position: 50% 0;
 }
 
 @media only screen and (max-width: 767px) {
   .tabRow > .tabCol:first-child {
-    background-position: 0 60%;
+    background-position: 0 70%;
   }
 }

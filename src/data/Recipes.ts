@@ -8,27 +8,27 @@ const Recipes: IRecipes[] = [
         price: 25,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'salt',
+                name: 'Salt',
                 qty: 1
             },
             {
-                name: 'butter',
+                name: 'Butter',
                 qty: 1
             },
             {
-                name: 'milk',
+                name: 'Milk',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl'],
+        equipment: ['Mixing Bowl'],
         image: 'biscuits.png'
     },
     {
@@ -38,27 +38,27 @@ const Recipes: IRecipes[] = [
         price: 40,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'salt',
+                name: 'Salt',
                 qty: 1
             },
             {
-                name: 'butter',
+                name: 'Butter',
                 qty: 1
             },
             {
-                name: 'chocolate chips',
+                name: 'Chocolate Chips',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl'],
+        equipment: ['Mixing Bowl'],
         image: 'cookies.png'
     },
     {
@@ -68,27 +68,27 @@ const Recipes: IRecipes[] = [
         price: 50,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'eggs',
+                name: 'Eggs',
                 qty: 1
             },
             {
-                name: 'vanilla',
+                name: 'Vanilla',
                 qty: 1
             },
             {
-                name: 'milk',
+                name: 'Milk',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl'],
+        equipment: ['Mixing Bowl'],
         image: 'doughnut.png'
     },
     {
@@ -98,27 +98,27 @@ const Recipes: IRecipes[] = [
         price: 70,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'egg',
+                name: 'Eggs',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'blueberry',
+                name: 'Blueberry',
                 qty: 1
             },
             {
-                name: 'baking powder',
+                name: 'Baking Powder',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'cooling rank'],
+        equipment: ['Mixing Bowl', 'Cooling Rack'],
         image: 'muffins.png'
     },
     {
@@ -128,27 +128,27 @@ const Recipes: IRecipes[] = [
         price: 100,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'salt',
+                name: 'Salt',
                 qty: 1
             },
             {
-                name: 'egg',
+                name: 'Eggs',
                 qty: 1
             },
             {
-                name: `baker's yeast`,
+                name: `Baker's Yeast`,
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'cooling rank'],
+        equipment: ['Mixing Bowl', 'Cooling Rack'],
         image: 'croissant.png'
     },
     {
@@ -158,27 +158,27 @@ const Recipes: IRecipes[] = [
         price: 120,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'butter',
+                name: 'Butter',
                 qty: 1
             },
             {
-                name: 'chocolate chips',
+                name: 'Chocolate Chips',
                 qty: 1
             },
             {
-                name: 'whipped cream',
+                name: 'Whipped Cream',
                 qty: 1
             },
         ],
-        equipment: ['cooling rack', 'spatula'],
+        equipment: ['Cooling Rack', 'Spatula'],
         image: 'eclair.png'
     },
     {
@@ -188,27 +188,27 @@ const Recipes: IRecipes[] = [
         price: 150,
         ingredients: [
             {
-                name: 'egg',
+                name: 'Eggs',
                 qty: 1
             },
             {
-                name: 'cream cheese',
+                name: 'Cream Cheese',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'butter',
+                name: 'Butter',
                 qty: 1
             },
             {
-                name: 'graham cracker',
+                name: 'Graham Cracker',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'spatula'],
+        equipment: ['Mixing Bowl', 'Spatula'],
         image: 'cheesecake.png'
     },
     {
@@ -218,27 +218,27 @@ const Recipes: IRecipes[] = [
         price: 200,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'chocolate',
+                name: 'Chocolate',
                 qty: 1
             },
             {
-                name: 'cream',
+                name: 'Cream',
                 qty: 1
             },
             {
-                name: 'egg',
+                name: 'Eggs',
                 qty: 1
             },
             {
-                name: 'baking powder',
+                name: 'Baking Powder',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'spatula', 'cooling rack'],
+        equipment: ['Mixing Bowl', 'Spatula', 'Cooling Rack'],
         image: 'chocolate-cake.png'
     },
     {
@@ -248,27 +248,27 @@ const Recipes: IRecipes[] = [
         price: 250,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'apple',
+                name: 'Apple',
                 qty: 1
             },
             {
-                name: 'egg',
+                name: 'Eggs',
                 qty: 1
             },
             {
-                name: 'butter',
+                name: 'Butter',
                 qty: 1
             },
             {
-                name: 'pie crust',
+                name: 'Pie Crust',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'spatula', 'rolling pin'],
+        equipment: ['Mixing Bowl', 'Spatula', 'Rolling Pin'],
         image: 'apple-pie.png'
     },
     {
@@ -278,23 +278,23 @@ const Recipes: IRecipes[] = [
         price: 300,
         ingredients: [
             {
-                name: 'all-purpose flour',
+                name: 'All-purpose Flour',
                 qty: 1
             },
             {
-                name: 'bread',
+                name: 'Bread',
                 qty: 1
             },
             {
-                name: `baker's yeast`,
+                name: `Baker's Yeast`,
                 qty: 1
             },
             {
-                name: 'salt',
+                name: 'Salt',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'speed mixer'],
+        equipment: ['Mixing Bowl', 'Speed Mixer'],
         image: 'baguette.png'
     },
     {
@@ -304,27 +304,27 @@ const Recipes: IRecipes[] = [
         price: 350,
         ingredients: [
             {
-                name: 'almond flour',
+                name: 'Almond Flour',
                 qty: 1
             },
             {
-                name: 'sugar',
+                name: 'Sugar',
                 qty: 1
             },
             {
-                name: 'eggs',
+                name: 'Eggs',
                 qty: 2
             },
             {
-                name: 'butter',
+                name: 'Butter',
                 qty: 1
             },
             {
-                name: 'milk',
+                name: 'Milk',
                 qty: 1
             },
         ],
-        equipment: ['mixing bowl', 'speed mixer', 'measuring spoons'],
+        equipment: ['Mixing Bowl', 'Speed Mixer', 'Measuring Spoons'],
         image: 'macaroons.png'
     },
 ]

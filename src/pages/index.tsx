@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Bakery from '@/components/Bakery/Bakery';
 import CookBook from '@/components/CookBook/CookBook';
-import Grocery from '@/components/Grocery/Grocery';
+import Market from '@/components/Market/Market';
 import Home from '@/components/Home/Home';
 import Tab from '@/shared/components/Tab';
 import PastryShopContext from '@/contexts/PastryShopContext';
@@ -13,10 +13,22 @@ import Storage from '@/data/Storage';
 import Recipes from '@/data/Recipes';
 import Items from '@/data/Items';
 import pastryShopTheme from '@/themes/PastryShopTheme';
+import { IBakedGoods, IIngredients, IPastriesOnDisplay, IUnlockedRecipes } from '@/types/PastryShop';
+import Image from 'next/image';
 
 export default function Index() {
   const [isMobile, setIsMobile] = useState(false);
   const [tabHeight, setTabHeight] = useState(0);
+  const [playerLevel, setPlayerLevel] = useState<number>(Player.level);
+  const [playerCurrentExp, setPlayerCurrentExp] = useState<number>(Player.currentExp);
+  const [playerExpToLevel, setPlayerExpToLevel] = useState<number>(Player.expToLevel);
+  const [playerCash, setPlayerCash] = useState<number>(Player.cash);
+  const [playerRep, setPlayerRep] = useState<number>(Player.rep);
+  const [storageIngredients, setStorageIngredients] = useState<IIngredients[]>(Storage.ingredients);
+  const [unlockedRecipes, setUnlockedRecipes] = useState<IUnlockedRecipes[]>(Player.unlockedRecipes);
+  const [unlockedEquipment, setUnlockedEquipment] = useState<string[]>(Player.unlockedEquipment);
+  const [bakedGoods, setBakedGoods] = useState<IBakedGoods[]>(Storage.bakedGoods);
+  const [pastriesOnDisplay, setPastriesOnDisplay] = useState<IPastriesOnDisplay[]>(Storage.pastriesOnDisplay);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -37,22 +49,22 @@ export default function Index() {
     {
       key: '1',
       label: `Home`,
-      children: <Tab component={<Home />} image={'home.jpg'} isMobile={isMobile} />,
+      children: <Tab component={<Home />} image={'home.png'} isMobile={isMobile} />,
     },
     {
       key: '2',
-      label: `Bakery`,
-      children: <Tab component={<Bakery />} image={'bakery.jpg'} isMobile={isMobile} />,
+      label: `Cook Book`,
+      children: <Tab component={<CookBook />} image={'cookbook.png'} isMobile={isMobile} />,
     },
     {
       key: '3',
-      label: `Cook Book`,
-      children: <Tab component={<CookBook />} image={'cookbook.jpg'} isMobile={isMobile} />,
+      label: `Market`,
+      children: <Tab component={<Market />} image={'market.png'} isMobile={isMobile} />,
     },
     {
       key: '4',
-      label: `Grocery`,
-      children: <Tab component={<Grocery />} image={'grocery.jpg'} isMobile={isMobile} />,
+      label: `Bakery`,
+      children: <Tab component={<Bakery />} image={'bakery.png'} isMobile={isMobile} />,
     },
   ];
 
@@ -67,19 +79,50 @@ export default function Index() {
       <main>
         <Layout style={{ minHeight: '100vh', backgroundColor: '#FFFFFF' }}>
           <Layout.Header className={styles.header}>
-            <Typography.Title level={2} style={{ margin: 0 }}>
-              Little Pastry Shop
+            <Image alt='pastry logo' height={40} width={40} src={`/images/pastry-logo.png`} style={{ marginRight: 10 }}></Image>
+            <Typography.Title level={2} style={{ textAlign: 'center', margin: 0 }}>
+              {'Little Pastry Shop'.toUpperCase()}
             </Typography.Title>
           </Layout.Header>
           <Layout.Content className={styles.content}>
-            <PastryShopContext.Provider value={{ Player, Storage, Recipes, Items, isMobile, tabHeight, setTabHeight }}>
+            <PastryShopContext.Provider
+              value={{
+                Player,
+                Storage,
+                Recipes,
+                Items,
+                playerLevel,
+                setPlayerLevel,
+                playerExpToLevel,
+                setPlayerExpToLevel,
+                playerCurrentExp,
+                setPlayerCurrentExp,
+                playerCash,
+                setPlayerCash,
+                playerRep,
+                setPlayerRep,
+                storageIngredients,
+                setStorageIngredients,
+                unlockedRecipes,
+                setUnlockedRecipes,
+                unlockedEquipment,
+                setUnlockedEquipment,
+                bakedGoods,
+                setBakedGoods,
+                pastriesOnDisplay,
+                setPastriesOnDisplay,
+                tabHeight,
+                setTabHeight,
+                isMobile,
+              }}
+            >
               <Tabs
                 defaultActiveKey='1'
                 items={tabs}
                 centered
                 onChange={onChange}
                 size='large'
-                style={{ maxWidth: '1200px', height: isMobile ? 'auto' : '575px', flexGrow: 1 }}
+                style={{ maxWidth: '1200px', height: isMobile ? 'auto' : '650px', flexGrow: 1 }}
                 className={styles.tabs}
               />
             </PastryShopContext.Provider>

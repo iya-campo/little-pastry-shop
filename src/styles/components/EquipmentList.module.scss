@@ -1,0 +1,17 @@
+.equipmentListBtn {
+  display: flex;
+  align-items: center;
+  border: 0;
+  box-shadow: none;
+  cursor: default;
+}
+
+.equipmentListIcon {
+  font-size: 1.2rem;
+  color: #888888;
+}
+
+.disabled {
+  opacity: 0.15;
+  cursor: not-allowed !important;
+}

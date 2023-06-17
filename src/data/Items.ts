@@ -6,134 +6,165 @@ export const Items: IItems = {
             id: 11,
             name: 'Mixing Bowl',
             price: 100,
-            levelRequirement: 0
+            levelRequirement: 0,
+            category: 'Equipment',
+            image: 'mixing-bowl.png'
         },
         {
             id: 12,
             name: 'Cooling Rack',
             price: 100,
-            levelRequirement: 5
+            levelRequirement: 5,
+            category: 'Equipment',
+            image: 'cooling-rack.png'
         },
         {
             id: 13,
             name: 'Spatula',
             price: 100,
-            levelRequirement: 10
+            levelRequirement: 10,
+            category: 'Equipment',
+            image: 'spatula.png'
         },
         {
             id: 14,
             name: 'Rolling Pin',
             price: 100,
-            levelRequirement: 15
+            levelRequirement: 15,
+            category: 'Equipment',
+            image: 'macaroons.png'
         },
         {
             id: 15,
             name: 'Speed Mixer',
             price: 100,
-            levelRequirement: 20
+            levelRequirement: 20,
+            category: 'Equipment',
+            image: 'speed-mixer.png'
         },
         {
             id: 16,
             name: 'Measuring Spoons',
             price: 100,
-            levelRequirement: 25
+            levelRequirement: 25,
+            category: 'Equipment',
+            image: 'measuring-spoons.png'
         },
     ],
     ingredients: [
         {
             id: 17,
-            name: 'all-purpose flour',
-            price: 10
+            name: 'All-purpose Flour',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 18,
-            name: 'sugar',
-            price: 10
+            name: 'Sugar',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 19,
-            name: 'salt',
-            price: 10
+            name: 'Salt',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 20,
-            name: 'butter',
-            price: 10
+            name: 'Butter',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 21,
-            name: 'milk',
-            price: 10
+            name: 'Milk',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 22,
-            name: 'chocolate chips',
-            price: 10
+            name: 'Chocolate Chips',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 23,
-            name: 'eggs',
-            price: 10
+            name: 'Eggs',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 24,
-            name: 'vanilla',
-            price: 10
+            name: 'Vanilla',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 25,
-            name: 'blueberry',
-            price: 10
+            name: 'Blueberry',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 26,
-            name: 'baking powder',
-            price: 10
+            name: 'Baking Powder',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 27,
-            name: `baker's yeast`,
-            price: 10
+            name: `Baker's Yeast`,
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 28,
-            name: 'whipped cream',
-            price: 10
+            name: 'Whipped Cream',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 29,
-            name: 'cream cheese',
-            price: 10
+            name: 'Cream Cheese',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 30,
-            name: 'graham cracker',
-            price: 10
+            name: 'Graham Cracker',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 31,
-            name: 'cream',
-            price: 10
+            name: 'Cream',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 32,
-            name: 'chocolate',
-            price: 10
+            name: 'Chocolate',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 33,
-            name: 'apple',
-            price: 10
+            name: 'Apple',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 34,
-            name: 'pie crust',
-            price: 10
+            name: 'Pie Crust',
+            price: 10,
+            category: 'Ingredient'
         },
         {
             id: 35,
-            name: 'almond flour',
-            price: 10
+            name: 'Almond Flour',
+            price: 10,
+            category: 'Ingredient'
         },
     ]
 }

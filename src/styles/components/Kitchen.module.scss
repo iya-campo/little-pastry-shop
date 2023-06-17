@@ -1,11 +1,8 @@
 div.equipmentSlot {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  border: 1px solid #ddd;
   border-radius: 3px;
-  margin: 8px 0;
+  margin: 24px 0;
   padding: 0 8px;
 }
 
@@ -21,4 +18,8 @@ div.equipmentSlot:last-child {
       border-radius: 3px;
     }
   }
+}
+
+.ingredientsSelect {
+  width: 100%;
 }

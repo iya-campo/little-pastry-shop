@@ -4,8 +4,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $primary;
-  height: 80px;
+  background-color: transparent;
+  flex-wrap: wrap;
+  padding-top: 2rem;
 }
 
 .content {
@@ -23,11 +24,11 @@
     }
 
     .ant-tabs-ink-bar {
-      background: $secondary;
+      background: $primary;
     }
 
     .ant-tabs-tab.ant-tabs-tab-active > .ant-tabs-tab-btn {
-      color: $secondary;
+      color: $primary;
     }
   }
 }
@@ -35,5 +36,9 @@
 @media only screen and (max-width: 767px) {
   .content {
     padding-top: 0;
+  }
+
+  .header {
+    margin-bottom: 2rem;
   }
 }

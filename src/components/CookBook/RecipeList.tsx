@@ -1,15 +1,21 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import { IRecipes } from '@/types/PastryShop';
+import { IPlayer, IRecipes } from '@/types/PastryShop';
 import { Avatar, List } from 'antd';
+import styles from '@/styles/components/RecipeList.module.scss';
 
 interface RecipeListProps {
   setPastryInfo: Dispatch<SetStateAction<IRecipes>>;
 }
 
-function RecipeList(props: RecipeListProps) {
-  const { Recipes, isMobile, tabHeight }: { Recipes?: IRecipes[]; isMobile?: boolean; tabHeight?: number } = useContext(PastryShopContext);
-  const { setPastryInfo } = props;
+function RecipeList({ setPastryInfo }: RecipeListProps) {
+  const {
+    Recipes,
+    Player,
+    playerLevel,
+    isMobile,
+    tabHeight,
+  }: { Recipes?: IRecipes[]; Player?: IPlayer; playerLevel: number; isMobile?: boolean; tabHeight?: number } = useContext(PastryShopContext);
 
   return (
     <section style={{ display: 'flex', flexDirection: 'column', height: isMobile ? '300px' : tabHeight }}>
@@ -17,17 +23,18 @@ function RecipeList(props: RecipeListProps) {
         size='small'
         itemLayout='horizontal'
         dataSource={Recipes}
-        style={{ overflowY: 'auto' }}
+        className={styles.recipeList}
         renderItem={(recipe: IRecipes, index: number) => (
           <List.Item
+            lockedtext={`Unlock at level ${recipe.levelRequirement}`}
             key={index}
+            className={playerLevel >= recipe.levelRequirement ? styles.unlocked : styles.locked}
             onClick={() => {
-              setPastryInfo(recipe);
+              if (playerLevel >= recipe.levelRequirement) setPastryInfo(recipe);
             }}
-            style={{ cursor: 'pointer' }}
           >
             <List.Item.Meta
-              avatar={<Avatar src={`icons/${recipe.image}`} style={{ borderRadius: 0 }} />}
+              avatar={<Avatar src={`icons/recipes/${recipe.image}`} style={{ borderRadius: 0 }} />}
               title={recipe.name}
               description='Ant Design, a design language for background applications.'
             />

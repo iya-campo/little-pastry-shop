@@ -6,22 +6,35 @@ import { Layout, Typography } from 'antd';
 import styles from '../../styles/components/Bakery.module.scss';
 
 function Bakery() {
-  const { Player, Storage }: { Player?: IPlayer; Storage?: IStorage } = useContext(PastryShopContext);
+  const {
+    playerCash,
+    playerRep,
+    pastriesOnDisplay,
+  }: {
+    Player?: IPlayer;
+    playerCash: number;
+    playerRep: number;
+    pastriesOnDisplay: IPastriesOnDisplay[];
+  } = useContext(PastryShopContext);
 
   return (
     <Layout.Content style={{ display: 'flex', flexDirection: 'column' }}>
       <section style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography.Title level={2}>Bakery</Typography.Title>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Typography.Text style={{ fontWeight: 600, marginRight: '8px' }}>Cash:</Typography.Text>
-          <Typography.Text>{`$ ${Player?.cash ? Player.cash : 0} (+ ${'0'})`}</Typography.Text>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography.Text style={{ fontWeight: 600, marginRight: '4px' }}>Cash:</Typography.Text>
+            <Typography.Text>{`$ ${playerCash ? playerCash : 0}`}</Typography.Text>
+          </div>
+          <div>
+            <Typography.Text style={{ fontWeight: 600, marginRight: '4px' }}>Reputation: </Typography.Text>
+            <Typography.Text>{playerRep ? playerRep : 0}</Typography.Text>
+          </div>
         </div>
       </section>
       <section style={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1 }}>
-        {Storage &&
-          Storage?.pastriesOnDisplay.map((pastry: IPastriesOnDisplay, index: number) => <DisplayStand key={index} index={index} pastry={pastry} />)}
-        {[...Array(4 - Storage?.pastriesOnDisplay.length).keys()].map((_, index: number) => (
-          <DisplayStand key={index} />
+        {pastriesOnDisplay.map((pastry: IPastriesOnDisplay, index: number) => (
+          <DisplayStand key={index} index={index} pastry={pastry} />
         ))}
       </section>
     </Layout.Content>

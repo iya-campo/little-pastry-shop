@@ -8,16 +8,15 @@ interface RecipeInfoProps {
   pastryInfo: IRecipes;
 }
 
-function RecipeInfo(props: RecipeInfoProps) {
+function RecipeInfo({ pastryInfo }: RecipeInfoProps) {
   const { isMobile }: { isMobile?: boolean } = useContext(PastryShopContext);
-  const { pastryInfo } = props;
 
   return (
     <>
       {pastryInfo && pastryInfo.name ? (
         <Row style={{ height: isMobile ? 'auto' : '30%' }}>
           <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Image alt='pastry img' src={`/icons/${pastryInfo.image}`} width={64} height={64}></Image>
+            <Image alt='pastry img' src={`/icons/recipes/${pastryInfo.image}`} width={64} height={64}></Image>
           </Col>
           <Col span={16} style={{ display: 'flex', flexDirection: 'column' }}>
             <Typography.Title level={4}>{pastryInfo.name}</Typography.Title>
