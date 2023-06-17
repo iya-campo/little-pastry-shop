@@ -1,16 +1,9 @@
 import React from 'react';
 import { ListItemProps } from 'antd/es/list';
-
 import { List } from 'antd';
-interface IListItemProps {
-  ListItemProps?: ListItemProps;
-  lockedText: string;
-  className: string;
-  children: React.ReactNode;
-  onClick: () => void;
-}
-function ListItem({ ListItemProps, lockedText, className, children, onClick }: IListItemProps) {
-  return <List.Item {...ListItemProps}>{children}</List.Item>;
+
+function ListItem(props: Omit<ListItemProps, 'lockedtext'> & React.RefAttributes<HTMLElement> & { lockedtext?: string }) {
+  return <List.Item {...(props as ListItemProps)} />;
 }
 
 export default ListItem;

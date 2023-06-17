@@ -3,6 +3,7 @@ import PastryShopContext from '@/contexts/PastryShopContext';
 import { IPlayer, IRecipes } from '@/types/PastryShop';
 import { Avatar, List } from 'antd';
 import styles from '@/styles/components/RecipeList.module.scss';
+import ListItem from '@/shared/components/ListItem';
 
 interface RecipeListProps {
   setPastryInfo: Dispatch<SetStateAction<IRecipes>>;
@@ -11,7 +12,6 @@ interface RecipeListProps {
 function RecipeList({ setPastryInfo }: RecipeListProps) {
   const {
     Recipes,
-    Player,
     playerLevel,
     isMobile,
     tabHeight,
@@ -25,7 +25,7 @@ function RecipeList({ setPastryInfo }: RecipeListProps) {
         dataSource={Recipes}
         className={styles.recipeList}
         renderItem={(recipe: IRecipes, index: number) => (
-          <List.Item
+          <ListItem
             lockedtext={`Unlock at level ${recipe.levelRequirement}`}
             key={index}
             className={playerLevel >= recipe.levelRequirement ? styles.unlocked : styles.locked}
@@ -38,7 +38,7 @@ function RecipeList({ setPastryInfo }: RecipeListProps) {
               title={recipe.name}
               description='Ant Design, a design language for background applications.'
             />
-          </List.Item>
+          </ListItem>
         )}
       />
     </section>
