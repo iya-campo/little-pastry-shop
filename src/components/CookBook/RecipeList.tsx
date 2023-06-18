@@ -5,17 +5,17 @@ import { Avatar, List } from 'antd';
 import styles from '@/styles/components/RecipeList.module.scss';
 import ListItem from '@/shared/components/ListItem';
 
-interface RecipeListProps {
+interface IRecipeListProps {
   setPastryInfo: Dispatch<SetStateAction<IRecipes>>;
 }
 
-function RecipeList({ setPastryInfo }: RecipeListProps) {
+function RecipeList({ setPastryInfo }: IRecipeListProps) {
   const {
     Recipes,
     playerLevel,
     isMobile,
     tabHeight,
-  }: { Recipes?: IRecipes[]; Player?: IPlayer; playerLevel: number; isMobile?: boolean; tabHeight?: number } = useContext(PastryShopContext);
+  }: { Recipes: IRecipes[]; Player: IPlayer; playerLevel: number; isMobile: boolean; tabHeight: number } = useContext(PastryShopContext);
 
   return (
     <section style={{ display: 'flex', flexDirection: 'column', height: isMobile ? '300px' : tabHeight }}>

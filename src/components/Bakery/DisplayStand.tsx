@@ -1,32 +1,30 @@
-import React, { useContext, SetStateAction, Dispatch, MouseEvent, useEffect } from 'react';
+import React, { useContext, SetStateAction, Dispatch, MouseEvent } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import { IBakedGoods, IPastriesOnDisplay, IRecipes, IStorage } from '@/types/PastryShop';
+import { IRecipes, IBakedGoods, IPastriesOnDisplay } from '@/types/PastryShop';
 import { Button, Card, Select, SelectProps, Typography } from 'antd';
 import { CloseSquareOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import styles from '../../styles/components/DisplayStand.module.scss';
 
-interface DisplayStandProps {
+interface IDisplayStandProps {
   index?: number;
   pastry?: IPastriesOnDisplay;
 }
 
-function DisplayStand({ index, pastry }: DisplayStandProps) {
+function DisplayStand({ index, pastry }: IDisplayStandProps) {
   const {
     Recipes,
-    Storage,
+    bakedGoods,
     playerCash,
     setPlayerCash,
-    bakedGoods,
     pastriesOnDisplay,
     setPastriesOnDisplay,
     isMobile,
   }: {
-    Recipes?: IRecipes[];
-    Storage?: IStorage;
+    Recipes: IRecipes[];
+    bakedGoods: IBakedGoods[];
     playerCash: number;
     setPlayerCash: Dispatch<SetStateAction<number>>;
-    bakedGoods: IBakedGoods[];
     pastriesOnDisplay: IPastriesOnDisplay[];
     setPastriesOnDisplay: Dispatch<SetStateAction<IPastriesOnDisplay[]>>;
     isMobile?: boolean;
@@ -67,20 +65,34 @@ function DisplayStand({ index, pastry }: DisplayStandProps) {
   };
 
   const setDisplaySlot = (action: 'Add' | 'Remove', pastry: IBakedGoods | IPastriesOnDisplay, order: number) => {
-    pastriesOnDisplay[order].name = action === 'Add' ? pastry.name : 'Empty';
-    pastriesOnDisplay[order].qty = action === 'Add' ? pastry.qty : 0;
-    pastriesOnDisplay[order].price = action === 'Add' ? pastry.price : 0;
-    pastriesOnDisplay[order].quality = action === 'Add' ? pastry.quality : 'N/A';
-    pastriesOnDisplay[order].order = order;
-
-    setPastriesOnDisplay((prevState: IPastriesOnDisplay[]) => [...prevState]);
+    setPastriesOnDisplay(
+      pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
+        pastryOnDisplay.order === order
+          ? {
+              name: action === 'Add' ? pastry.name : 'Empty',
+              qty: action === 'Add' ? pastry.qty : 0,
+              price: action === 'Add' ? pastry.price : 0,
+              quality: action === 'Add' ? pastry.quality : 'N/A',
+              order: order,
+            }
+          : pastryOnDisplay
+      )
+    );
   };
 
   const purchaseDisplaySlot = (order: number, price: number) => {
     if (playerCash >= price) {
-      Storage.pastriesOnDisplay[order].name = 'Empty';
-      setPastriesOnDisplay((prevState: IPastriesOnDisplay[]) => [...prevState]);
       setPlayerCash((prevState: number) => prevState - price);
+      setPastriesOnDisplay(
+        pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
+          pastryOnDisplay.order === order
+            ? {
+                ...pastryOnDisplay,
+                name: 'Empty',
+              }
+            : pastryOnDisplay
+        )
+      );
     }
   };
 

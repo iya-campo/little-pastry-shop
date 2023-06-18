@@ -1,10 +1,9 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import { IPlayer, IBakedGoods, IEndDayModal } from '@/types/PastryShop';
+import { IBakedGoods, IEndDayModal } from '@/types/PastryShop';
 import { Modal, Typography } from 'antd';
-import styles from '@/styles/components/Home.module.scss';
 
-interface IEndDay {
+interface IEndDayProps {
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   modalData: IEndDayModal;
@@ -13,9 +12,13 @@ interface IEndDay {
   setTotalExpGained: Dispatch<SetStateAction<number>>;
 }
 
-function EndDay({ isModalOpen, setIsModalOpen, modalData, setModalData, totalExpGained, setTotalExpGained }: IEndDay) {
-  const { Player, playerCash, playerRep, playerCurrentExp }: { Player: IPlayer; playerCash: number; playerRep: number; playerCurrentExp: number } =
-    useContext(PastryShopContext);
+function EndDay({ isModalOpen, setIsModalOpen, modalData, setModalData, totalExpGained, setTotalExpGained }: IEndDayProps) {
+  const {
+    playerCurrentExp,
+    playerCash,
+    playerRep,
+    playerDaysPlayed,
+  }: { playerCurrentExp: number; playerCash: number; playerRep: number; playerDaysPlayed: number } = useContext(PastryShopContext);
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -28,7 +31,7 @@ function EndDay({ isModalOpen, setIsModalOpen, modalData, setModalData, totalExp
 
   return (
     <>
-      <Modal title={`Day ${Player.daysPlayed} Summary`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
+      <Modal title={`Day ${playerDaysPlayed - 1} Summary`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <Typography.Text style={{ display: 'block', marginTop: '1rem' }}>
           <strong>Pastries Sold</strong>
         </Typography.Text>

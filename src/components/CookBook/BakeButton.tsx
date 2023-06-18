@@ -8,7 +8,7 @@ interface IBakeButtonProps {
 }
 
 function BakeButton({ bakePastry, isBakeable }: IBakeButtonProps) {
-  const { isMobile }: { isMobile?: boolean } = useContext(PastryShopContext);
+  const { isMobile }: { isMobile: boolean } = useContext(PastryShopContext);
 
   return (
     <Row style={{ display: 'flex', alignItems: 'flex-end', height: isMobile ? 'auto' : '10%' }}>

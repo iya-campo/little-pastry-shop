@@ -19,9 +19,10 @@ function Market() {
     setTabHeight,
   }: {
     playerCash: number;
-    isMobile?: boolean;
-    setTabHeight?: Dispatch<SetStateAction<number>>;
+    isMobile: boolean;
+    setTabHeight: Dispatch<SetStateAction<number>>;
   } = useContext(PastryShopContext);
+
   const heightRef = useRef(null);
 
   const [cart, setCart] = useState<ICartItem[]>([]);

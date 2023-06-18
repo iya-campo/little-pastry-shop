@@ -1,29 +1,15 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import {
-  IBakedGoods,
-  IEndDayModal,
-  IItems,
-  IItemsEquipment,
-  IPastriesOnDisplay,
-  IPlayer,
-  IRecipes,
-  IStorage,
-  IUnlockedRecipes,
-} from '@/types/PastryShop';
+import { IBakedGoods, IPastriesOnDisplay, IEndDayModal } from '@/types/PastryShop';
 import PlayerLevel from './PlayerLevel';
-import { determineSuccess, randomAmount } from '@/utils/Utils';
-import { Layout, Row, Col, Divider, Button, Typography } from 'antd';
-import styles from '@/styles/components/Home.module.scss';
+import ItemsUnlocked from './ItemsUnlocked';
 import EndDay from './EndDay';
-import Image from 'next/image';
+import { determineSuccess, randomAmount } from '@/utils/Utils';
+import { Layout, Row, Col, Button, Typography } from 'antd';
 
 function Home() {
   const {
-    Player,
-    Recipes,
-    Items,
-    Storage,
+    setPlayerDaysPlayed,
     playerLevel,
     setPlayerLevel,
     playerCurrentExp,
@@ -34,15 +20,13 @@ function Home() {
     setPlayerCash,
     playerRep,
     setPlayerRep,
+    bakedGoods,
     setBakedGoods,
+    pastriesOnDisplay,
     setPastriesOnDisplay,
-    unlockedEquipment,
     isMobile,
   }: {
-    Player?: IPlayer;
-    Recipes?: IRecipes[];
-    Items?: IItems;
-    Storage?: IStorage;
+    setPlayerDaysPlayed: Dispatch<SetStateAction<number>>;
     playerLevel: number;
     setPlayerLevel: Dispatch<SetStateAction<number>>;
     playerCurrentExp: number;
@@ -53,10 +37,11 @@ function Home() {
     setPlayerCash: Dispatch<SetStateAction<number>>;
     playerRep: number;
     setPlayerRep: Dispatch<SetStateAction<number>>;
-    unlockedEquipment: string[];
+    bakedGoods: IBakedGoods[];
     setBakedGoods: Dispatch<SetStateAction<IBakedGoods[]>>;
+    pastriesOnDisplay: IPastriesOnDisplay[];
     setPastriesOnDisplay: Dispatch<SetStateAction<IPastriesOnDisplay[]>>;
-    isMobile?: boolean;
+    isMobile: boolean;
   } = useContext(PastryShopContext);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -74,11 +59,11 @@ function Home() {
   const endDay = () => {
     sellGoods();
     setIsModalOpen(true);
-    Player.daysPlayed += 1;
+    setPlayerDaysPlayed((prevState: number) => (prevState += 1));
   };
 
   const sellGoods = () => {
-    Storage.pastriesOnDisplay.map((pastry: IPastriesOnDisplay) => {
+    pastriesOnDisplay.map((pastry: IPastriesOnDisplay) => {
       // chance for pastries to be sold when day is ended
       // increased chance with higher reputation
       // if (determineSuccess(playerRep / 100) && pastry.name !== 'Empty' && pastry.name !== 'Locked' && pastry.name !== 'Unlocked') {
@@ -165,26 +150,43 @@ function Home() {
 
   const deductPastry = (pastry: IPastriesOnDisplay, amountSold: number) => {
     if (pastry.qty > 1 && pastry.qty !== amountSold) {
-      let storagePastryToDeduct = Storage.bakedGoods.find(
-        (deductedPastry: IBakedGoods) => deductedPastry.name === pastry.name && deductedPastry.quality === pastry.quality
+      setBakedGoods(
+        bakedGoods.map((bakedGood: IBakedGoods) =>
+          bakedGood.name === pastry.name && bakedGood.quality === pastry.quality
+            ? {
+                ...bakedGood,
+                qty: bakedGood.qty - amountSold,
+              }
+            : bakedGood
+        )
       );
-      storagePastryToDeduct.qty -= amountSold;
-
-      let displayPastryToDeduct = Storage.pastriesOnDisplay.find(
-        (deductedPastry: IPastriesOnDisplay) => deductedPastry.name === pastry.name && deductedPastry.quality === pastry.quality
+      setPastriesOnDisplay(
+        pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
+          pastryOnDisplay.name === pastry.name && pastryOnDisplay.quality === pastry.quality
+            ? {
+                ...pastryOnDisplay,
+                qty: pastryOnDisplay.qty - amountSold,
+              }
+            : pastryOnDisplay
+        )
       );
-      displayPastryToDeduct.qty -= amountSold;
     } else {
-      Storage.bakedGoods = Storage.bakedGoods.filter(
-        (removedPastry: IBakedGoods) => `${removedPastry.name} (${removedPastry.quality})` !== `${pastry.name} (${pastry.quality})`
+      setBakedGoods(
+        bakedGoods.filter((removedPastry: IBakedGoods) => `${removedPastry.name} (${removedPastry.quality})` !== `${pastry.name} (${pastry.quality})`)
       );
-      setBakedGoods(Storage.bakedGoods);
-
-      Storage.pastriesOnDisplay[pastry.order].name = 'Empty';
-      Storage.pastriesOnDisplay[pastry.order].qty = 0;
-      Storage.pastriesOnDisplay[pastry.order].price = 0;
-      Storage.pastriesOnDisplay[pastry.order].quality = 'N/A';
-      Storage.pastriesOnDisplay[pastry.order].order = pastry.order;
+      setPastriesOnDisplay(
+        pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
+          `${pastryOnDisplay.name} (${pastryOnDisplay.quality})` !== `${pastry.name} (${pastry.quality})`
+            ? {
+                ...pastryOnDisplay,
+                name: 'Empty',
+                qty: 0,
+                price: 0,
+                quality: 'N/A',
+              }
+            : pastryOnDisplay
+        )
+      );
     }
   };
 
@@ -207,15 +209,15 @@ function Home() {
   };
 
   const unlockDisplaySlot = () => {
-    const maxDisplaySlot: number = (Storage.pastriesOnDisplay.length - 2) * 10;
+    const maxDisplaySlot: number = (pastriesOnDisplay.length - 2) * 10;
     let displaySlotLevel: number = 10; // first slot unlocked at level 10
     let displaySlotIndex: number = 2; // first slot on index 2
 
     for (let i = 0; i <= maxDisplaySlot; i += 10) {
       if (playerLevel >= displaySlotLevel) {
-        Storage.pastriesOnDisplay[displaySlotIndex].name = 'Unlocked';
+        pastriesOnDisplay[displaySlotIndex].name = 'Unlocked';
         displaySlotLevel += 10;
-        if (displaySlotIndex < Storage.pastriesOnDisplay.length) {
+        if (displaySlotIndex < pastriesOnDisplay.length) {
           displaySlotIndex += 1;
           setPastriesOnDisplay((prevState: IPastriesOnDisplay[]) => [...prevState]);
         }
@@ -228,46 +230,7 @@ function Home() {
       <Typography.Title level={2}>Home Sweet Home</Typography.Title>
       <Row style={{ flexGrow: 1, flexWrap: 'wrap-reverse' }}>
         <Col span={isMobile ? 24 : 16} style={{ display: 'flex', flexDirection: 'column', paddingRight: isMobile ? 0 : '2rem' }}>
-          <section style={{ marginBottom: '1rem' }}>
-            <Divider plain orientation='left'>
-              <Typography.Title level={5} style={{ fontWeight: 600, marginRight: '4px' }}>
-                Pastries Baked
-              </Typography.Title>
-            </Divider>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {Player.unlockedRecipes.map((unlockedRecipe: IUnlockedRecipes, index: number) => (
-                <div key={index} className={styles.unlockedItems}>
-                  <Image
-                    alt={unlockedRecipe.name}
-                    height={40}
-                    width={40}
-                    src={`/icons/recipes/${Recipes.find((recipe: IRecipes) => recipe.name === unlockedRecipe.name).image}`}
-                  ></Image>
-                  <Typography.Text strong>{unlockedRecipe.amountBaked}</Typography.Text>
-                </div>
-              ))}
-            </div>
-          </section>
-          <section style={{ flexGrow: 1 }}>
-            <Divider plain orientation='left'>
-              <Typography.Title level={5} style={{ fontWeight: 600, marginRight: '4px' }}>
-                Equipment Unlocked
-              </Typography.Title>
-            </Divider>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {unlockedEquipment.length !== 0 &&
-                unlockedEquipment.map((unlockedEquipment: string, index: number) => (
-                  <div key={index} className={styles.unlockedItems}>
-                    <Image
-                      alt={unlockedEquipment}
-                      height={40}
-                      width={40}
-                      src={`/icons/equipment/${Items.equipment.find((equipment: IItemsEquipment) => equipment.name === unlockedEquipment).image}`}
-                    ></Image>
-                  </div>
-                ))}
-            </div>
-          </section>
+          <ItemsUnlocked />
           <Button style={{ height: '45px', width: '100%' }} onClick={endDay}>
             End Day
           </Button>

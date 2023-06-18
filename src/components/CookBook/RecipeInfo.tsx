@@ -4,12 +4,12 @@ import { IIngredients, IRecipes } from '@/types/PastryShop';
 import { Row, Col, Typography } from 'antd';
 import Image from 'next/image';
 
-interface RecipeInfoProps {
+interface IRecipeInfoProps {
   pastryInfo: IRecipes;
 }
 
-function RecipeInfo({ pastryInfo }: RecipeInfoProps) {
-  const { isMobile }: { isMobile?: boolean } = useContext(PastryShopContext);
+function RecipeInfo({ pastryInfo }: IRecipeInfoProps) {
+  const { isMobile }: { isMobile: boolean } = useContext(PastryShopContext);
 
   return (
     <>

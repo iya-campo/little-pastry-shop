@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import { IStorage, IPastriesOnDisplay, IPlayer } from '@/types/PastryShop';
+import { IPastriesOnDisplay } from '@/types/PastryShop';
 import DisplayStand from './DisplayStand';
 import { Layout, Typography } from 'antd';
-import styles from '../../styles/components/Bakery.module.scss';
 
 function Bakery() {
   const {
@@ -11,7 +10,6 @@ function Bakery() {
     playerRep,
     pastriesOnDisplay,
   }: {
-    Player?: IPlayer;
     playerCash: number;
     playerRep: number;
     pastriesOnDisplay: IPastriesOnDisplay[];

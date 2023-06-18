@@ -9,7 +9,7 @@ interface IIngredientsListProps {
 }
 
 function IngredientsList({ addToCart }: IIngredientsListProps) {
-  const { Items, isMobile, tabHeight }: { Items?: IItems; isMobile?: boolean; tabHeight?: number } = useContext(PastryShopContext);
+  const { Items, isMobile, tabHeight }: { Items: IItems; isMobile: boolean; tabHeight: number } = useContext(PastryShopContext);
 
   const ingredientsList: IItemsIngredients[] = Items.ingredients;
 

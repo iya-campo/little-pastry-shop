@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
+import { ICartItem, IIngredients } from '@/types/PastryShop';
 import { Button, InputNumber, List, Typography } from 'antd';
-import styles from '@/styles/components/ShoppingCart.module.scss';
-import { ICartItem, IIngredients, IPlayer, IStorage } from '@/types/PastryShop';
 
 interface IShoppingCartProps {
   cart: ICartItem[];
@@ -11,25 +10,23 @@ interface IShoppingCartProps {
 
 function ShoppingCart({ cart, setCart }: IShoppingCartProps) {
   const {
-    Player,
-    Storage,
     playerCash,
     setPlayerCash,
+    storageIngredients,
     setStorageIngredients,
-    setUnlockedEquipment,
     unlockedEquipment,
+    setUnlockedEquipment,
     isMobile,
     tabHeight,
   }: {
-    Player?: IPlayer;
-    Storage?: IStorage;
     playerCash: number;
     setPlayerCash: Dispatch<SetStateAction<number>>;
-    setStorageIngredients?: Dispatch<SetStateAction<IIngredients[]>>;
-    setUnlockedEquipment?: Dispatch<SetStateAction<string[]>>;
+    storageIngredients: IIngredients[];
+    setStorageIngredients: Dispatch<SetStateAction<IIngredients[]>>;
     unlockedEquipment: string[];
-    isMobile?: boolean;
-    tabHeight?: number;
+    setUnlockedEquipment: Dispatch<SetStateAction<string[]>>;
+    isMobile: boolean;
+    tabHeight: number;
   } = useContext(PastryShopContext);
 
   const [cartTotal, setCartTotal] = useState<number>(0);
@@ -59,13 +56,15 @@ function ShoppingCart({ cart, setCart }: IShoppingCartProps) {
           qty: cartItem.qty,
           category: cartItem.category,
         };
-        const existingIngredient = Storage.ingredients.find((storageIngredient: IIngredients) => storageIngredient.name === purchasedIngredient.name);
+        const existingIngredient = storageIngredients.find((storageIngredient: IIngredients) => storageIngredient.name === purchasedIngredient.name);
         if (!existingIngredient) {
-          setStorageIngredients([...Storage.ingredients, purchasedIngredient]);
-          Storage.ingredients = [...Storage.ingredients, purchasedIngredient];
+          setStorageIngredients((prevState: IIngredients[]) => [...prevState, purchasedIngredient]);
         } else {
-          setStorageIngredients((prevState: IIngredients[]) => [...prevState]);
-          existingIngredient.qty += 1;
+          setStorageIngredients(
+            storageIngredients.map((storageIngredients: IIngredients) =>
+              storageIngredients.name === existingIngredient.name ? { ...storageIngredients, qty: storageIngredients.qty + 1 } : storageIngredients
+            )
+          );
         }
       });
 
@@ -77,7 +76,7 @@ function ShoppingCart({ cart, setCart }: IShoppingCartProps) {
     setPlayerCash((prevState: number) => (prevState -= cartTotal));
     setCart([]);
     console.log('Checkout successful!');
-    console.log('Stored Ingredients:', Storage.ingredients);
+    console.log('Stored Ingredients:', storageIngredients);
     console.log('Unlocked Equipment:', unlockedEquipment);
   };
 

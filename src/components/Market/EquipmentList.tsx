@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import { IItems, IItemsIngredients, IItemsEquipment, IPlayer } from '@/types/PastryShop';
+import { IItems, IItemsIngredients, IItemsEquipment } from '@/types/PastryShop';
 import { Button, List, Typography } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import styles from '@/styles/components/EquipmentList.module.scss';
@@ -11,14 +11,12 @@ interface IEquipmentListProps {
 
 function EquipmentList({ addToCart }: IEquipmentListProps) {
   const {
-    Player,
     Items,
     playerLevel,
     unlockedEquipment,
     isMobile,
     tabHeight,
-  }: { Player?: IPlayer; Items?: IItems; playerLevel: number; unlockedEquipment: string[]; isMobile?: boolean; tabHeight?: number } =
-    useContext(PastryShopContext);
+  }: { Items: IItems; playerLevel: number; unlockedEquipment: string[]; isMobile: boolean; tabHeight: number } = useContext(PastryShopContext);
 
   const equipmentList: IItemsEquipment[] = Items.equipment;
 

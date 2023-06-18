@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext, Dispatch, SetStateAction, MouseEvent } from 'react';
+import React, { useState, useEffect, useContext, Dispatch, SetStateAction } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import { IEquipmentSlot, IIngredients, IPlayer, IRecipes, IStorage } from '@/types/PastryShop';
+import { IRecipes, IIngredients, IEquipmentSlot } from '@/types/PastryShop';
 import { Row, Col, Select, SelectProps, Typography } from 'antd';
 import styles from '@/styles/components/Kitchen.module.scss';
-import { DefaultOptionType } from 'antd/es/select';
-import { valueType } from 'antd/es/statistic/utils';
 
 interface IKitchenProps {
   pastryInfo: IRecipes;
@@ -16,7 +14,7 @@ interface IKitchenProps {
 }
 
 function Kitchen({ pastryInfo, setIsBakeable, selectedIngredients, setSelectedIngredients, selectedEquipment, setSelectedEquipment }: IKitchenProps) {
-  const { storageIngredients, unlockedEquipment, isMobile }: { storageIngredients: IIngredients[]; unlockedEquipment: string[]; isMobile?: boolean } =
+  const { storageIngredients, unlockedEquipment, isMobile }: { storageIngredients: IIngredients[]; unlockedEquipment: string[]; isMobile: boolean } =
     useContext(PastryShopContext);
 
   const ingredients: SelectProps['options'] = [];

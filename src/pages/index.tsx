@@ -1,34 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Bakery from '@/components/Bakery/Bakery';
+import PastryShopContext from '@/contexts/PastryShopContext';
+import { IBakedGoods, IIngredients, IPastriesOnDisplay, IUnlockedRecipes } from '@/types/PastryShop';
+import Tab from '@/shared/components/Tab';
+import Home from '@/components/Home/Home';
 import CookBook from '@/components/CookBook/CookBook';
 import Market from '@/components/Market/Market';
-import Home from '@/components/Home/Home';
-import Tab from '@/shared/components/Tab';
-import PastryShopContext from '@/contexts/PastryShopContext';
+import Bakery from '@/components/Bakery/Bakery';
 import { ConfigProvider, Layout, Tabs, TabsProps, Typography } from 'antd';
+import Image from 'next/image';
+import pastryShopTheme from '@/themes/PastryShopTheme';
 import styles from '@/styles/index.module.scss';
 import Player from '@/data/Player';
 import Storage from '@/data/Storage';
 import Recipes from '@/data/Recipes';
 import Items from '@/data/Items';
-import pastryShopTheme from '@/themes/PastryShopTheme';
-import { IBakedGoods, IIngredients, IPastriesOnDisplay, IUnlockedRecipes } from '@/types/PastryShop';
-import Image from 'next/image';
 
 export default function Index() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [tabHeight, setTabHeight] = useState(0);
+  const [playerName, setPlayerName] = useState<string>(Player.name);
   const [playerLevel, setPlayerLevel] = useState<number>(Player.level);
   const [playerCurrentExp, setPlayerCurrentExp] = useState<number>(Player.currentExp);
   const [playerExpToLevel, setPlayerExpToLevel] = useState<number>(Player.expToLevel);
   const [playerCash, setPlayerCash] = useState<number>(Player.cash);
   const [playerRep, setPlayerRep] = useState<number>(Player.rep);
+  const [playerDaysPlayed, setPlayerDaysPlayed] = useState<number>(Player.daysPlayed);
   const [storageIngredients, setStorageIngredients] = useState<IIngredients[]>(Storage.ingredients);
   const [unlockedRecipes, setUnlockedRecipes] = useState<IUnlockedRecipes[]>(Player.unlockedRecipes);
   const [unlockedEquipment, setUnlockedEquipment] = useState<string[]>(Player.unlockedEquipment);
   const [bakedGoods, setBakedGoods] = useState<IBakedGoods[]>(Storage.bakedGoods);
   const [pastriesOnDisplay, setPastriesOnDisplay] = useState<IPastriesOnDisplay[]>(Storage.pastriesOnDisplay);
+  const [tabHeight, setTabHeight] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -91,6 +93,8 @@ export default function Index() {
                 Storage,
                 Recipes,
                 Items,
+                playerName,
+                setPlayerName,
                 playerLevel,
                 setPlayerLevel,
                 playerExpToLevel,
@@ -101,6 +105,8 @@ export default function Index() {
                 setPlayerCash,
                 playerRep,
                 setPlayerRep,
+                playerDaysPlayed,
+                setPlayerDaysPlayed,
                 storageIngredients,
                 setStorageIngredients,
                 unlockedRecipes,

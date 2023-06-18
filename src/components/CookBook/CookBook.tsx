@@ -1,33 +1,38 @@
 import React, { useState, useContext, Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
-import { IBakedGoods, IIngredients, IPastriesOnDisplay, IPlayer, IRecipes, IStorage, IUnlockedRecipes } from '@/types/PastryShop';
+import { IBakedGoods, IIngredients, IPastriesOnDisplay, IRecipes, IUnlockedRecipes } from '@/types/PastryShop';
 import RecipeList from './RecipeList';
 import RecipeInfo from './RecipeInfo';
 import Kitchen from './Kitchen';
 import BakeButton from './BakeButton';
 import { determineQuality, determineSuccess } from '@/utils/Utils';
 import { Layout, Row, Col, Typography } from 'antd';
-import styles from '@/styles/components/CookBook.module.scss';
 
 function CookBook() {
   const {
-    Player,
-    Storage,
     setPlayerCurrentExp,
-    setStorageIngredients,
+    bakedGoods,
     setBakedGoods,
+    pastriesOnDisplay,
     setPastriesOnDisplay,
-    isMobile,
+    storageIngredients,
+    setStorageIngredients,
+    unlockedRecipes,
+    setUnlockedRecipes,
     setTabHeight,
+    isMobile,
   }: {
-    Player?: IPlayer;
-    Storage?: IStorage;
     setPlayerCurrentExp: Dispatch<SetStateAction<number>>;
-    setStorageIngredients: Dispatch<SetStateAction<IIngredients[]>>;
+    bakedGoods: IBakedGoods[];
     setBakedGoods: Dispatch<SetStateAction<IBakedGoods[]>>;
+    pastriesOnDisplay: IPastriesOnDisplay[];
     setPastriesOnDisplay: Dispatch<SetStateAction<IPastriesOnDisplay[]>>;
-    isMobile?: boolean;
-    setTabHeight?: Dispatch<SetStateAction<number>>;
+    storageIngredients: IIngredients[];
+    setStorageIngredients: Dispatch<SetStateAction<IIngredients[]>>;
+    unlockedRecipes: IUnlockedRecipes[];
+    setUnlockedRecipes: Dispatch<SetStateAction<IUnlockedRecipes[]>>;
+    setTabHeight: Dispatch<SetStateAction<number>>;
+    isMobile: boolean;
   } = useContext(PastryShopContext);
   const [pastryInfo, setPastryInfo] = useState<IRecipes>();
   const [isBakeable, setIsBakeable] = useState<boolean>(false);
@@ -40,12 +45,12 @@ function CookBook() {
   }, []);
 
   const bakePastry = () => {
-    const recipe: IUnlockedRecipes = Player.unlockedRecipes.find((recipe: IUnlockedRecipes) => recipe.name === pastryInfo.name);
+    const recipe: IUnlockedRecipes = unlockedRecipes.find((recipe: IUnlockedRecipes) => recipe.name === pastryInfo.name);
 
-    const existingBakedGood: IBakedGoods = Storage.bakedGoods.find(
+    const existingBakedGood: IBakedGoods = bakedGoods.find(
       (bakedGood: IBakedGoods) => bakedGood.name === pastryInfo.name && bakedGood.quality === determineQuality(recipe.mastery)
     );
-    const existingPastriesOnDisplay: IPastriesOnDisplay = Storage.pastriesOnDisplay.find(
+    const existingPastriesOnDisplay: IPastriesOnDisplay = pastriesOnDisplay.find(
       (pastriesOnDisplay: IPastriesOnDisplay) =>
         pastriesOnDisplay.name === pastryInfo.name && pastriesOnDisplay.quality === determineQuality(recipe.mastery)
     );
@@ -63,21 +68,32 @@ function CookBook() {
               quality: determineQuality(recipe.mastery),
             },
           ];
-          Storage.bakedGoods = updatedBakedGoods;
           return updatedBakedGoods;
         });
       } else {
-        setBakedGoods((prevState: IBakedGoods[]) => {
-          existingBakedGood.qty += 1;
-          return [...prevState];
-        });
+        setBakedGoods(
+          bakedGoods.map((bakedGood: IBakedGoods) =>
+            bakedGood.name === existingBakedGood.name && bakedGood.quality === existingBakedGood.quality
+              ? {
+                  ...bakedGood,
+                  qty: (bakedGood.qty += 1),
+                }
+              : bakedGood
+          )
+        );
       }
 
       if (existingPastriesOnDisplay) {
-        setPastriesOnDisplay((prevState: IPastriesOnDisplay[]) => {
-          existingPastriesOnDisplay.qty += 1;
-          return [...prevState];
-        });
+        setPastriesOnDisplay(
+          pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
+            pastryOnDisplay.name === existingPastriesOnDisplay.name && pastryOnDisplay.quality === existingPastriesOnDisplay.quality
+              ? {
+                  ...pastryOnDisplay,
+                  qty: (pastryOnDisplay.qty += 1),
+                }
+              : pastryOnDisplay
+          )
+        );
       }
 
       gainMastery(recipe);
@@ -90,29 +106,37 @@ function CookBook() {
   };
 
   const gainMastery = (recipe: IUnlockedRecipes) => {
-    const masteryRecipe: IUnlockedRecipes = recipe;
     let masteryGained: number = 0;
-    switch (determineQuality(masteryRecipe.mastery)) {
+    switch (determineQuality(recipe.mastery)) {
       case 'Poor':
-        masteryGained += 4;
+        masteryGained = 4;
         break;
       case 'Decent':
-        masteryGained += 3;
+        masteryGained = 3;
         break;
       case 'Good':
-        masteryGained += 2;
+        masteryGained = 2;
         break;
       case 'Great':
-        masteryGained += 1;
+        masteryGained = 1;
         break;
       case 'Excellent':
-        masteryGained += 0;
+        masteryGained = 0;
         break;
       default:
         console.log('Invalid quality.');
     }
-    masteryRecipe.mastery += masteryGained;
-    console.log(`${pastryInfo.name} mastery: ${masteryRecipe.mastery} (${determineQuality(masteryRecipe.mastery)})`);
+    setUnlockedRecipes(
+      unlockedRecipes.map((unlockedRecipe: IUnlockedRecipes) =>
+        unlockedRecipe.name === recipe.name
+          ? {
+              ...unlockedRecipe,
+              mastery: unlockedRecipe.mastery + 4,
+            }
+          : unlockedRecipe
+      )
+    );
+    console.log(`${pastryInfo.name} mastery: ${recipe.mastery} (${determineQuality(recipe.mastery)})`);
   };
 
   const addBakeCount = (recipe: IUnlockedRecipes) => {
@@ -122,12 +146,11 @@ function CookBook() {
 
   const consumeIngredients = () => {
     let remainingIngredients: IIngredients[];
-    Storage.ingredients.map((storedIngredient: IIngredients) => {
+    storageIngredients.map((storedIngredient: IIngredients) => {
       pastryInfo.ingredients.map((recipeIngredient: IIngredients) => {
         if (recipeIngredient.name === storedIngredient.name && storedIngredient.qty === 1) {
-          remainingIngredients = Storage.ingredients.filter((storedIngredient: IIngredients) => recipeIngredient.name !== storedIngredient.name);
+          remainingIngredients = storageIngredients.filter((storedIngredient: IIngredients) => recipeIngredient.name !== storedIngredient.name);
           setStorageIngredients(remainingIngredients);
-          Storage.ingredients = remainingIngredients;
         }
         if (recipeIngredient.name === storedIngredient.name && storedIngredient.qty > 1) {
           setStorageIngredients((prevState: IIngredients[]) => [...prevState]);
@@ -137,7 +160,7 @@ function CookBook() {
     });
 
     clearConsumedIngredients();
-    console.log('Stored Ingredients:', Storage.ingredients);
+    console.log('Stored Ingredients:', storageIngredients);
   };
 
   const gainExp = () => {
@@ -149,7 +172,7 @@ function CookBook() {
 
   const clearConsumedIngredients = () => {
     let remainingSelected: string[] = [];
-    Storage.ingredients.map((storageIngredient: IIngredients) => {
+    storageIngredients.map((storageIngredient: IIngredients) => {
       if (selectedIngredients.includes(storageIngredient.name)) remainingSelected = [...remainingSelected, storageIngredient.name];
     });
     setSelectedIngredients(remainingSelected);
