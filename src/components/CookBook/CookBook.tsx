@@ -140,8 +140,16 @@ function CookBook() {
   };
 
   const addBakeCount = (recipe: IUnlockedRecipes) => {
-    const bakedRecipe: IUnlockedRecipes = recipe;
-    bakedRecipe.amountBaked += 1;
+    setUnlockedRecipes(
+      unlockedRecipes.map((unlockedRecipe: IUnlockedRecipes) =>
+        unlockedRecipe.name === recipe.name
+          ? {
+              ...unlockedRecipe,
+              amountBaked: unlockedRecipe.amountBaked + 1,
+            }
+          : unlockedRecipe
+      )
+    );
   };
 
   const consumeIngredients = () => {
