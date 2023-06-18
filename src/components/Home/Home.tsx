@@ -176,7 +176,7 @@ function Home() {
       );
       setPastriesOnDisplay(
         pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
-          `${pastryOnDisplay.name} (${pastryOnDisplay.quality})` !== `${pastry.name} (${pastry.quality})`
+          `${pastryOnDisplay.name} (${pastryOnDisplay.quality})` === `${pastry.name} (${pastry.quality})`
             ? {
                 ...pastryOnDisplay,
                 name: 'Empty',
