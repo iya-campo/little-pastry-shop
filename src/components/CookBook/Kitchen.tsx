@@ -60,19 +60,21 @@ function Kitchen({ pastryInfo, setIsBakeable, selectedIngredients, setSelectedIn
   }, [pastryInfo]);
 
   const checkRecipe = () => {
-    if (!pastryInfo || selectedIngredients.length === 0 || selectedEquipment.length === 0) return;
+    if (!pastryInfo) return;
 
     let matchedEquipment: boolean, matchedIngredients: boolean;
 
     const recipeEquipment = pastryInfo.equipment.map((equipment: string) => equipment);
     recipeEquipment.sort();
     selectedEquipment.sort();
-    matchedEquipment = selectedEquipment.every((equipment: string, index: number) => equipment === recipeEquipment[index]);
+    matchedEquipment =
+      selectedEquipment.length !== 0 && selectedEquipment.every((equipment: string, index: number) => equipment === recipeEquipment[index]);
 
     const recipeIngredients = pastryInfo.ingredients.map((ingredients: IIngredients) => ingredients.name);
     recipeIngredients.sort();
     selectedIngredients.sort();
-    matchedIngredients = selectedIngredients.every((ingredient: string, index: number) => ingredient === recipeIngredients[index]);
+    matchedIngredients =
+      selectedIngredients.length !== 0 && selectedIngredients.every((ingredient: string, index: number) => ingredient === recipeIngredients[index]);
 
     setIsBakeable(matchedEquipment && matchedIngredients);
   };

@@ -44,6 +44,10 @@ function CookBook() {
     setTabHeight(heightRef.current?.clientHeight);
   }, []);
 
+  useEffect(() => {
+    clearConsumedIngredients();
+  }, [storageIngredients]);
+
   const bakePastry = () => {
     const recipe: IUnlockedRecipes = unlockedRecipes.find((recipe: IUnlockedRecipes) => recipe.name === pastryInfo.name);
 
@@ -76,7 +80,7 @@ function CookBook() {
             bakedGood.name === existingBakedGood.name && bakedGood.quality === existingBakedGood.quality
               ? {
                   ...bakedGood,
-                  qty: (bakedGood.qty += 1),
+                  qty: bakedGood.qty + 1,
                 }
               : bakedGood
           )
@@ -89,7 +93,7 @@ function CookBook() {
             pastryOnDisplay.name === existingPastriesOnDisplay.name && pastryOnDisplay.quality === existingPastriesOnDisplay.quality
               ? {
                   ...pastryOnDisplay,
-                  qty: (pastryOnDisplay.qty += 1),
+                  qty: pastryOnDisplay.qty + 1,
                 }
               : pastryOnDisplay
           )
@@ -101,8 +105,8 @@ function CookBook() {
     } else {
       console.log(`Failed to bake a ${pastryInfo.name}...`);
     }
-    consumeIngredients();
     gainExp();
+    consumeIngredients();
   };
 
   const gainMastery = (recipe: IUnlockedRecipes) => {
@@ -126,17 +130,15 @@ function CookBook() {
       default:
         console.log('Invalid quality.');
     }
-    setUnlockedRecipes(
-      unlockedRecipes.map((unlockedRecipe: IUnlockedRecipes) =>
-        unlockedRecipe.name === recipe.name
-          ? {
-              ...unlockedRecipe,
-              mastery: unlockedRecipe.mastery + 4,
-            }
-          : unlockedRecipe
-      )
-    );
+    recipe.mastery += masteryGained;
     console.log(`${pastryInfo.name} mastery: ${recipe.mastery} (${determineQuality(recipe.mastery)})`);
+  };
+
+  const gainExp = () => {
+    let expGained: number = 0;
+    expGained += pastryInfo.price;
+    setPlayerCurrentExp((prevState: number) => prevState + expGained);
+    console.log(`You gained ${expGained} exp for baking.`);
   };
 
   const addBakeCount = (recipe: IUnlockedRecipes) => {
@@ -153,29 +155,27 @@ function CookBook() {
   };
 
   const consumeIngredients = () => {
-    let remainingIngredients: IIngredients[];
-    storageIngredients.map((storedIngredient: IIngredients) => {
-      pastryInfo.ingredients.map((recipeIngredient: IIngredients) => {
-        if (recipeIngredient.name === storedIngredient.name && storedIngredient.qty === 1) {
-          remainingIngredients = storageIngredients.filter((storedIngredient: IIngredients) => recipeIngredient.name !== storedIngredient.name);
-          setStorageIngredients(remainingIngredients);
-        }
-        if (recipeIngredient.name === storedIngredient.name && storedIngredient.qty > 1) {
-          setStorageIngredients((prevState: IIngredients[]) => [...prevState]);
-          storedIngredient.qty -= 1;
-        }
-      });
+    const recipeIngredients: string[] = pastryInfo.ingredients.map((recipeIngredient: IIngredients) => recipeIngredient.name);
+
+    storageIngredients.map((storageIngredient: IIngredients) => {
+      if (recipeIngredients.includes(storageIngredient.name) && storageIngredient.qty > 1) {
+        setStorageIngredients((prevState: IIngredients[]) =>
+          prevState.map((consumedIngredient: IIngredients) =>
+            consumedIngredient.name === storageIngredient.name
+              ? {
+                  ...consumedIngredient,
+                  qty: consumedIngredient.qty - 1,
+                }
+              : consumedIngredient
+          )
+        );
+      }
+      if (recipeIngredients.includes(storageIngredient.name) && storageIngredient.qty === 1) {
+        setStorageIngredients((prevState: IIngredients[]) =>
+          prevState.filter((consumedIngredient: IIngredients) => consumedIngredient.name !== storageIngredient.name)
+        );
+      }
     });
-
-    clearConsumedIngredients();
-    console.log('Stored Ingredients:', storageIngredients);
-  };
-
-  const gainExp = () => {
-    let expGained: number = 0;
-    expGained += pastryInfo.price;
-    setPlayerCurrentExp((prevState: number) => prevState + expGained);
-    console.log(`You gained ${expGained} exp for baking.`);
   };
 
   const clearConsumedIngredients = () => {
@@ -183,7 +183,8 @@ function CookBook() {
     storageIngredients.map((storageIngredient: IIngredients) => {
       if (selectedIngredients.includes(storageIngredient.name)) remainingSelected = [...remainingSelected, storageIngredient.name];
     });
-    setSelectedIngredients(remainingSelected);
+    setSelectedIngredients(remainingSelected.sort());
+    console.log('Stored Ingredients:', storageIngredients);
   };
 
   return (
