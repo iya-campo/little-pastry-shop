@@ -27,7 +27,7 @@ function ItemsUnlocked() {
                 alt={unlockedRecipe.name}
                 height={40}
                 width={40}
-                src={`/icons/recipes/${Recipes.find((recipe: IRecipes) => recipe.name === unlockedRecipe.name).image}`}
+                src={`icons/recipes/${Recipes.find((recipe: IRecipes) => recipe.name === unlockedRecipe.name).image}`}
               ></Image>
               <Typography.Text strong>{unlockedRecipe.amountBaked}</Typography.Text>
             </div>
@@ -48,7 +48,7 @@ function ItemsUnlocked() {
                   alt={unlockedEquipment}
                   height={40}
                   width={40}
-                  src={`/icons/equipment/${Items.equipment.find((equipment: IItemsEquipment) => equipment.name === unlockedEquipment).image}`}
+                  src={`icons/equipment/${Items.equipment.find((equipment: IItemsEquipment) => equipment.name === unlockedEquipment).image}`}
                 ></Image>
               </div>
             ))}

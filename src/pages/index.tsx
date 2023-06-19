@@ -81,7 +81,7 @@ export default function Index() {
       <main>
         <Layout style={{ minHeight: '100vh', backgroundColor: '#FFFFFF' }}>
           <Layout.Header className={styles.header}>
-            <Image alt='pastry logo' height={40} width={40} src={`/images/pastry-logo.png`} style={{ marginRight: 10 }}></Image>
+            <Image alt='pastry logo' height={40} width={40} src={`images/pastry-logo.png`} style={{ marginRight: 10 }}></Image>
             <Typography.Title level={2} style={{ textAlign: 'center', margin: 0 }}>
               {'Little Pastry Shop'.toUpperCase()}
             </Typography.Title>
