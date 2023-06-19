@@ -37,10 +37,17 @@ function EquipmentList({ addToCart }: IEquipmentListProps) {
         style={{ overflowY: 'auto' }}
         renderItem={(item: IItemsEquipment) => (
           <List.Item>
-            <Typography.Text>{`${item.name} - $ ${item.price}`}</Typography.Text>
+            {!isMobile ? (
+              <Typography.Text>{`${item.name} - $ ${item.price}`}</Typography.Text>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography.Text>{`${item.name}`}</Typography.Text>
+                <Typography.Text>{`$ ${item.price}`}</Typography.Text>
+              </div>
+            )}
             <Button className={styles.equipmentListBtn}>
               {checkEquipmentRequirement(item) && `Lvl. ${item.levelRequirement}`}
-              {checkIfEquipmentOwned(item) && `Equipment Owned`}
+              {checkIfEquipmentOwned(item) && `Owned`}
               <PlusCircleOutlined
                 className={`${styles.equipmentListIcon} ${checkEquipmentRequirement(item) || checkIfEquipmentOwned(item) ? styles.disabled : ''}`}
                 onClick={() => {

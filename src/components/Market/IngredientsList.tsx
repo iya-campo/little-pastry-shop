@@ -22,7 +22,15 @@ function IngredientsList({ addToCart }: IIngredientsListProps) {
         style={{ overflowY: 'auto' }}
         renderItem={(item: IItemsIngredients) => (
           <List.Item>
-            <Typography.Text>{`${item.name} - $ ${item.price}`}</Typography.Text>
+            {!isMobile ? (
+              <Typography.Text>{`${item.name} - $ ${item.price}`}</Typography.Text>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography.Text>{`${item.name}`}</Typography.Text>
+                <Typography.Text>{`$ ${item.price}`}</Typography.Text>
+              </div>
+            )}
+
             <Button style={{ border: 0, boxShadow: 'none', cursor: 'default' }}>
               <PlusCircleOutlined
                 style={{ fontSize: '1.2rem', color: '#888888' }}

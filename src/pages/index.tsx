@@ -33,9 +33,10 @@ export default function Index() {
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
   });
 
-  //choose the screen size
   const handleResize = () => {
     if (window.innerWidth <= 767) {
       setIsMobile(true);
@@ -88,7 +89,7 @@ export default function Index() {
               style={{ display: 'block', verticalAlign: 'initial' }}
               preview={false}
             ></Image>
-            <Typography.Title level={2} style={{ textAlign: 'center', margin: 0 }}>
+            <Typography.Title level={!isMobile ? 2 : 3} style={{ textAlign: 'center', margin: 0 }}>
               {'Little Pastry Shop'.toUpperCase()}
             </Typography.Title>
           </Layout.Header>
