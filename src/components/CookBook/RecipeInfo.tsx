@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
 import { IIngredients, IRecipes } from '@/types/PastryShop';
-import { Row, Col, Typography } from 'antd';
-import Image from 'next/image';
+import { Row, Col, Typography, Image } from 'antd';
 
 interface IRecipeInfoProps {
   pastryInfo: IRecipes;
@@ -16,7 +15,7 @@ function RecipeInfo({ pastryInfo }: IRecipeInfoProps) {
       {pastryInfo && pastryInfo.name ? (
         <Row style={{ height: isMobile ? 'auto' : '30%' }}>
           <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Image alt='pastry img' src={`icons/recipes/${pastryInfo.image}`} width={64} height={64}></Image>
+            <Image alt='pastry img' src={`/icons/recipes/${pastryInfo.image}`} width={64} height={64} preview={false}></Image>
           </Col>
           <Col span={16} style={{ display: 'flex', flexDirection: 'column' }}>
             <Typography.Title level={4}>{pastryInfo.name}</Typography.Title>

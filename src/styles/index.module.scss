@@ -7,6 +7,12 @@
   background-color: transparent;
   flex-wrap: wrap;
   padding-top: 2rem;
+
+  :global {
+    .ant-image {
+      margin-right: 8px;
+    }
+  }
 }
 
 .content {

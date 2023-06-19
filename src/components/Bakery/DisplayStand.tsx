@@ -1,9 +1,8 @@
 import React, { useContext, SetStateAction, Dispatch, MouseEvent } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
 import { IRecipes, IBakedGoods, IPastriesOnDisplay } from '@/types/PastryShop';
-import { Button, Card, Select, SelectProps, Typography } from 'antd';
+import { Button, Card, Select, SelectProps, Typography, Image } from 'antd';
 import { CloseSquareOutlined } from '@ant-design/icons';
-import Image from 'next/image';
 import styles from '../../styles/components/DisplayStand.module.scss';
 
 interface IDisplayStandProps {
@@ -113,7 +112,7 @@ function DisplayStand({ index, pastry }: IDisplayStandProps) {
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginBottom: '1rem' }}>
-              <Image alt='pastry on display' height={64} width={64} src={`icons/recipes/${findPastryImg(pastry.name)}`}></Image>
+              <Image alt='pastry on display' height={64} width={64} src={`/icons/recipes/${findPastryImg(pastry.name)}`} preview={false}></Image>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Typography.Text style={{ fontWeight: 600 }}>{pastry.name.toUpperCase()}</Typography.Text>

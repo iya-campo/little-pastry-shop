@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
 import { IItems, IItemsEquipment, IRecipes, IUnlockedRecipes } from '@/types/PastryShop';
-import { Divider, Typography } from 'antd';
+import { Divider, Typography, Image } from 'antd';
 import styles from '../../styles/components/ItemsUnlocked.module.scss';
-import Image from 'next/image';
 
 function ItemsUnlocked() {
   const {
@@ -27,7 +26,8 @@ function ItemsUnlocked() {
                 alt={unlockedRecipe.name}
                 height={40}
                 width={40}
-                src={`icons/recipes/${Recipes.find((recipe: IRecipes) => recipe.name === unlockedRecipe.name).image}`}
+                src={`/icons/recipes/${Recipes.find((recipe: IRecipes) => recipe.name === unlockedRecipe.name).image}`}
+                preview={false}
               ></Image>
               <Typography.Text strong>{unlockedRecipe.amountBaked}</Typography.Text>
             </div>
@@ -48,7 +48,8 @@ function ItemsUnlocked() {
                   alt={unlockedEquipment}
                   height={40}
                   width={40}
-                  src={`icons/equipment/${Items.equipment.find((equipment: IItemsEquipment) => equipment.name === unlockedEquipment).image}`}
+                  src={`/icons/equipment/${Items.equipment.find((equipment: IItemsEquipment) => equipment.name === unlockedEquipment).image}`}
+                  preview={false}
                 ></Image>
               </div>
             ))}
