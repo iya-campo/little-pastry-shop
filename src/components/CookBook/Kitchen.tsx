@@ -68,13 +68,15 @@ function Kitchen({ pastryInfo, setIsBakeable, selectedIngredients, setSelectedIn
     recipeEquipment.sort();
     selectedEquipment.sort();
     matchedEquipment =
-      selectedEquipment.length !== 0 && selectedEquipment.every((equipment: string, index: number) => equipment === recipeEquipment[index]);
+      selectedEquipment.length === recipeEquipment.length &&
+      selectedEquipment.every((equipment: string, index: number) => equipment === recipeEquipment[index]);
 
     const recipeIngredients = pastryInfo.ingredients.map((ingredients: IIngredients) => ingredients.name);
     recipeIngredients.sort();
     selectedIngredients.sort();
     matchedIngredients =
-      selectedIngredients.length !== 0 && selectedIngredients.every((ingredient: string, index: number) => ingredient === recipeIngredients[index]);
+      selectedIngredients.length === recipeIngredients.length &&
+      selectedIngredients.every((ingredient: string, index: number) => ingredient === recipeIngredients[index]);
 
     setIsBakeable(matchedEquipment && matchedIngredients);
   };

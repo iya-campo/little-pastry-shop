@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
 import PastryShopContext from '@/contexts/PastryShopContext';
 import { IPlayer, IRecipes } from '@/types/PastryShop';
+import ListItem from '@/shared/components/ListItem';
 import { Avatar, List } from 'antd';
 import styles from '@/styles/components/RecipeList.module.scss';
-import ListItem from '@/shared/components/ListItem';
 
 interface IRecipeListProps {
   setPastryInfo: Dispatch<SetStateAction<IRecipes>>;

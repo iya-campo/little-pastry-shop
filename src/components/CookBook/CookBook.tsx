@@ -5,8 +5,9 @@ import RecipeList from './RecipeList';
 import RecipeInfo from './RecipeInfo';
 import Kitchen from './Kitchen';
 import BakeButton from './BakeButton';
-import { determineQuality, determineSuccess } from '@/utils/Utils';
 import { Layout, Row, Col, Typography } from 'antd';
+import { determineQuality, determineSuccess } from '@/utils/Utils';
+import { INIT_MASTERY } from '@/utils/Constants';
 
 function CookBook() {
   const {
@@ -50,63 +51,89 @@ function CookBook() {
 
   const bakePastry = () => {
     const recipe: IUnlockedRecipes = unlockedRecipes.find((recipe: IUnlockedRecipes) => recipe.name === pastryInfo.name);
+    const mastery: number = recipe?.mastery ? recipe?.mastery : INIT_MASTERY;
+    const isSuccess = true; // determineSuccess(mastery);
 
-    const existingBakedGood: IBakedGoods = bakedGoods.find(
-      (bakedGood: IBakedGoods) => bakedGood.name === pastryInfo.name && bakedGood.quality === determineQuality(recipe.mastery)
-    );
-    const existingPastriesOnDisplay: IPastriesOnDisplay = pastriesOnDisplay.find(
-      (pastriesOnDisplay: IPastriesOnDisplay) =>
-        pastriesOnDisplay.name === pastryInfo.name && pastriesOnDisplay.quality === determineQuality(recipe.mastery)
-    );
-
-    // if (determineSuccess(recipe.mastery)) {
-    if (true) {
-      if (!existingBakedGood) {
-        setBakedGoods((prevState: IBakedGoods[]) => {
-          const updatedBakedGoods: IBakedGoods[] = [
-            ...prevState,
-            {
-              name: pastryInfo.name,
-              qty: 1,
-              price: pastryInfo.price,
-              quality: determineQuality(recipe.mastery),
-            },
-          ];
-          return updatedBakedGoods;
-        });
-      } else {
-        setBakedGoods(
-          bakedGoods.map((bakedGood: IBakedGoods) =>
-            bakedGood.name === existingBakedGood.name && bakedGood.quality === existingBakedGood.quality
-              ? {
-                  ...bakedGood,
-                  qty: bakedGood.qty + 1,
-                }
-              : bakedGood
-          )
-        );
+    if (isSuccess) {
+      unlockPastry();
+      storePastry(mastery);
+      if (recipe) {
+        gainMastery(recipe);
+        addBakeCount();
       }
-
-      if (existingPastriesOnDisplay) {
-        setPastriesOnDisplay(
-          pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
-            pastryOnDisplay.name === existingPastriesOnDisplay.name && pastryOnDisplay.quality === existingPastriesOnDisplay.quality
-              ? {
-                  ...pastryOnDisplay,
-                  qty: pastryOnDisplay.qty + 1,
-                }
-              : pastryOnDisplay
-          )
-        );
-      }
-
-      gainMastery(recipe);
-      addBakeCount(recipe);
     } else {
       console.log(`Failed to bake a ${pastryInfo.name}...`);
     }
     gainExp();
     consumeIngredients();
+  };
+
+  const unlockPastry = () => {
+    const unlockedRecipe: IUnlockedRecipes = unlockedRecipes.find((unlockedRecipe: IUnlockedRecipes) => unlockedRecipe.name === pastryInfo.name);
+    if (!unlockedRecipe) {
+      setUnlockedRecipes((prevState: IUnlockedRecipes[]) => [
+        ...prevState,
+        {
+          name: pastryInfo.name,
+          mastery: INIT_MASTERY,
+          amountBaked: 1,
+        },
+      ]);
+    }
+  };
+
+  const storePastry = (recipeMastery: number) => {
+    const existingBakedGood: IBakedGoods = bakedGoods.find(
+      (bakedGood: IBakedGoods) => bakedGood.name === pastryInfo.name && bakedGood.quality === determineQuality(recipeMastery)
+    );
+
+    if (!existingBakedGood) {
+      setBakedGoods((prevState: IBakedGoods[]) => {
+        const updatedBakedGoods: IBakedGoods[] = [
+          ...prevState,
+          {
+            name: pastryInfo.name,
+            qty: 1,
+            price: pastryInfo.price,
+            quality: determineQuality(recipeMastery),
+          },
+        ];
+        return updatedBakedGoods;
+      });
+    } else {
+      setBakedGoods(
+        bakedGoods.map((bakedGood: IBakedGoods) =>
+          bakedGood.name === existingBakedGood.name && bakedGood.quality === existingBakedGood.quality
+            ? {
+                ...bakedGood,
+                qty: bakedGood.qty + 1,
+              }
+            : bakedGood
+        )
+      );
+    }
+
+    updatePastryDisplay(recipeMastery);
+  };
+
+  const updatePastryDisplay = (recipeMastery: number) => {
+    const existingPastriesOnDisplay: IPastriesOnDisplay = pastriesOnDisplay.find(
+      (pastriesOnDisplay: IPastriesOnDisplay) =>
+        pastriesOnDisplay.name === pastryInfo.name && pastriesOnDisplay.quality === determineQuality(recipeMastery)
+    );
+
+    if (existingPastriesOnDisplay) {
+      setPastriesOnDisplay(
+        pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
+          pastryOnDisplay.name === existingPastriesOnDisplay.name && pastryOnDisplay.quality === existingPastriesOnDisplay.quality
+            ? {
+                ...pastryOnDisplay,
+                qty: pastryOnDisplay.qty + 1,
+              }
+            : pastryOnDisplay
+        )
+      );
+    }
   };
 
   const gainMastery = (recipe: IUnlockedRecipes) => {
@@ -141,10 +168,10 @@ function CookBook() {
     console.log(`You gained ${expGained} exp for baking.`);
   };
 
-  const addBakeCount = (recipe: IUnlockedRecipes) => {
+  const addBakeCount = () => {
     setUnlockedRecipes(
       unlockedRecipes.map((unlockedRecipe: IUnlockedRecipes) =>
-        unlockedRecipe.name === recipe.name
+        unlockedRecipe.name === pastryInfo.name
           ? {
               ...unlockedRecipe,
               amountBaked: unlockedRecipe.amountBaked + 1,

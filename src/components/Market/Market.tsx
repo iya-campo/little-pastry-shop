@@ -74,14 +74,14 @@ function Market() {
       <Row style={{ flexGrow: 1, overflow: 'hidden' }} ref={heightRef}>
         <Col span={isMobile ? 24 : 16} style={{ marginTop: isMobile ? '1rem' : 0 }}>
           <Tabs
-            style={{ height: '100%', paddingRight: isMobile ? 0 : '2rem' }}
+            style={{ paddingRight: isMobile ? 0 : '2rem' }}
             className={styles.listTabs}
             tabPosition='left'
             items={new Array(2).fill(null).map((_, index: number) => {
               const id = String(index);
               return {
-                label: tabDetails[index].label,
                 key: id,
+                label: tabDetails[index].label,
                 children: tabDetails[index].children,
               };
             })}

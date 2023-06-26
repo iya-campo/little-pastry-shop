@@ -4,8 +4,9 @@ import { IBakedGoods, IPastriesOnDisplay, IEndDayModal } from '@/types/PastrySho
 import PlayerLevel from './PlayerLevel';
 import ItemsUnlocked from './ItemsUnlocked';
 import EndDay from './EndDay';
-import { determineSuccess, randomAmount } from '@/utils/Utils';
 import { Layout, Row, Col, Button, Typography } from 'antd';
+import { randomAmount } from '@/utils/Utils';
+import { DISPLAY_SLOTS_LEVEL } from '@/utils/Constants';
 
 function Home() {
   const {
@@ -150,8 +151,8 @@ function Home() {
 
   const deductPastry = (pastry: IPastriesOnDisplay, amountSold: number) => {
     if (pastry.qty > 1 && pastry.qty !== amountSold) {
-      setBakedGoods(
-        bakedGoods.map((bakedGood: IBakedGoods) =>
+      setBakedGoods((prevState: IBakedGoods[]) =>
+        prevState.map((bakedGood: IBakedGoods) =>
           bakedGood.name === pastry.name && bakedGood.quality === pastry.quality
             ? {
                 ...bakedGood,
@@ -160,8 +161,8 @@ function Home() {
             : bakedGood
         )
       );
-      setPastriesOnDisplay(
-        pastriesOnDisplay.map((pastryOnDisplay: IPastriesOnDisplay) =>
+      setPastriesOnDisplay((prevState: IPastriesOnDisplay[]) =>
+        prevState.map((pastryOnDisplay: IPastriesOnDisplay) =>
           pastryOnDisplay.name === pastry.name && pastryOnDisplay.quality === pastry.quality
             ? {
                 ...pastryOnDisplay,
@@ -209,19 +210,22 @@ function Home() {
   };
 
   const unlockDisplaySlot = () => {
-    const maxDisplaySlot: number = (pastriesOnDisplay.length - 2) * 10;
-    let displaySlotLevel: number = 10; // first slot unlocked at level 10
-    let displaySlotIndex: number = 2; // first slot on index 2
+    const currentSlots: number = pastriesOnDisplay.filter((pastrySlot: IPastriesOnDisplay) => pastrySlot.name !== 'Locked').length;
+    const slotsUnlocked: number = Math.trunc(playerLevel / (DISPLAY_SLOTS_LEVEL * (currentSlots - 1)));
 
-    for (let i = 0; i <= maxDisplaySlot; i += 10) {
-      if (playerLevel >= displaySlotLevel) {
-        pastriesOnDisplay[displaySlotIndex].name = 'Unlocked';
-        displaySlotLevel += 10;
-        if (displaySlotIndex < pastriesOnDisplay.length) {
-          displaySlotIndex += 1;
-          setPastriesOnDisplay((prevState: IPastriesOnDisplay[]) => [...prevState]);
-        }
-      }
+    if (slotsUnlocked === 0) return;
+
+    for (let i = 1; i <= slotsUnlocked; i++) {
+      setPastriesOnDisplay((prevState: IPastriesOnDisplay[]) =>
+        prevState.map((pastrySlot: IPastriesOnDisplay) =>
+          pastrySlot.name === 'Locked' && pastrySlot.order === currentSlots
+            ? {
+                ...pastrySlot,
+                name: 'Unlocked',
+              }
+            : pastrySlot
+        )
+      );
     }
   };
 

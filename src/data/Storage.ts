@@ -43,7 +43,22 @@ const Storage: IStorage = {
         },
         {
             name: 'Cream',
-            qty: 1,
+            qty: 5,
+            category: 'Ingredient'
+        },
+        {
+            name: 'Salt',
+            qty: 10,
+            category: 'Ingredient'
+        },
+        {
+            name: 'Butter',
+            qty: 10,
+            category: 'Ingredient'
+        },
+        {
+            name: 'Chocolate Chips',
+            qty: 10,
             category: 'Ingredient'
         },
     ],
