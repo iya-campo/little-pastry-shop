@@ -26,7 +26,7 @@ function ItemsUnlocked() {
                 alt={unlockedRecipe.name}
                 height={40}
                 width={40}
-                src={`/icons/recipes/${Recipes.find((recipe: IRecipes) => recipe.name === unlockedRecipe.name).image}`}
+                src={`/little-pastry-shop/icons/recipes/${Recipes.find((recipe: IRecipes) => recipe.name === unlockedRecipe.name).image}`}
                 preview={false}
               ></Image>
               <Typography.Text strong>{unlockedRecipe.amountBaked}</Typography.Text>
@@ -48,7 +48,7 @@ function ItemsUnlocked() {
                   alt={unlockedEquipment}
                   height={40}
                   width={40}
-                  src={`/icons/equipment/${Items.equipment.find((equipment: IItemsEquipment) => equipment.name === unlockedEquipment).image}`}
+                  src={`/little-pastry-shop/icons/equipment/${Items.equipment.find((equipment: IItemsEquipment) => equipment.name === unlockedEquipment).image}`}
                   preview={false}
                 ></Image>
               </div>

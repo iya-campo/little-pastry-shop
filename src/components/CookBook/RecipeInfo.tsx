@@ -15,7 +15,7 @@ function RecipeInfo({ pastryInfo }: IRecipeInfoProps) {
       {pastryInfo && pastryInfo.name ? (
         <Row style={{ height: isMobile ? 'auto' : '30%' }}>
           <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Image alt='pastry img' src={`/icons/recipes/${pastryInfo.image}`} width={64} height={64} preview={false}></Image>
+            <Image alt='pastry img' src={`/little-pastry-shop/icons/recipes/${pastryInfo.image}`} width={64} height={64} preview={false}></Image>
           </Col>
           <Col span={16} style={{ display: 'flex', flexDirection: 'column' }}>
             <Typography.Title level={4}>{pastryInfo.name}</Typography.Title>

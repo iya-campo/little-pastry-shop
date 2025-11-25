@@ -34,7 +34,7 @@ function RecipeList({ setPastryInfo }: IRecipeListProps) {
             }}
           >
             <List.Item.Meta
-              avatar={<Avatar src={`/icons/recipes/${recipe.image}`} style={{ borderRadius: 0 }} />}
+              avatar={<Avatar src={`/little-pastry-shop/icons/recipes/${recipe.image}`} style={{ borderRadius: 0 }} />}
               title={recipe.name}
               description='Ant Design, a design language for background applications.'
             />
