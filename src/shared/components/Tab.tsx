@@ -19,7 +19,7 @@ function Tab({ isMobile, image, component }: ITabProps) {
           md={{ span: 6 }}
           lg={{ span: 6 }}
           xl={{ span: 6 }}
-          style={{ backgroundImage: `url(little-pastry-shop/images/${image})`, backgroundSize: 'cover', height: `${isMobile ? '100px' : '100%'}` }}
+          style={{ backgroundImage: `url(/little-pastry-shop/images/${image})`, backgroundSize: 'cover', height: `${isMobile ? '100px' : '100%'}` }}
         />
         <Col className={styles.tabCol} xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 18 }} lg={{ span: 18 }} xl={{ span: 18 }}>
           {component}
